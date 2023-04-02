@@ -1,13 +1,13 @@
-<section class="login w-full h-screen flex flex-col items-center">
+<section class="login bg-secondary w-full h-screen flex flex-col items-center">
   <div
     class="logo w-full flex items-center justify-center mb-5 md:mb-0 py-8 relative"
   >
     <img class="w-36" src="../../assets/logos/logo_vertical.png" alt="logo" />
-    <div class="absolute right-10 top-5">
+    <div class="absolute text-white right-10 top-5">
       <div>
         <button
           (click)="selectLanguage()"
-          class="hover:bg-[#dcdddf] text-xs px-8 py-2 rounded-md inline-flex items-center"
+          class="hover:bg-light text-xs px-8 py-2 rounded-md inline-flex items-center"
         >
           <svg
             aria-hidden="true"
@@ -50,7 +50,7 @@
           <ul class="py-2 space-y-2 font-medium text-xs" role="none">
             <li
               (click)="selectLanguage()"
-              class="w-full hover:bg-[#F3F4F6] cursor-pointer px-4 py-2"
+              class="w-full hover:bg-light cursor-pointer px-4 py-2"
             >
               <div class="inline-flex items-center">
                 <svg
@@ -72,26 +72,26 @@
       </div>
     </div>
   </div>
-  <div class="main w-full flex items-center justify-center">
+  <div class="main text-white w-full flex items-center justify-center">
     <div
-      class="login__card w-11/12 md:w-2/6 space-y-8 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md px-10 py-5"
+      class="login__card bg-light w-11/12 md:w-2/6 space-y-8 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md p-10"
     >
       <h1 class="font-bold text-xl text-center">Login to your account</h1>
       <div class="flex flex-col space-y-4">
         <div class="inputs flex flex-col space-y-4">
           <div class="email__input flex flex-col w-full space-y-2">
-            <label class="text-sm font-semibold" for="email">Email</label>
+            <label class="text-sm font-normal" for="email">Email</label>
             <input
-              class="w-full rounded-md border-gray border outline-none bg-[#F9FAFB] px-4 py-2"
+              class="w-full text-secondary rounded-md border-gray border outline-none bg-[#e0e0e0] px-4 py-2"
               type="email"
               placeholder="john@example.com"
             />
             <!-- <span class="text-xs text-red font-semibold">Email is required</span> -->
           </div>
           <div class="password__input flex flex-col w-full space-y-2">
-            <label class="text-sm font-semibold" for="password">Password</label>
+            <label class="text-sm font-normal" for="password">Password</label>
             <input
-              class="w-full rounded-md border-gray border outline-none bg-[#F9FAFB] px-4 py-2"
+              class="w-full text-secondary rounded-md border-gray border outline-none bg-[#e0e0e0] px-4 py-2"
               type="password"
               placeholder="******"
             />

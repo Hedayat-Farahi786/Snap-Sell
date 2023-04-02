@@ -1,1 +1,52 @@
-<p>products works!</p>
+<section class="products flex flex-col p-10 bg-[#2A2A2A]">
+  <div class="menu__items flex space-x-5">
+    <div
+    [style]="{background: menu.active? '#e0702b4c' : '', borderColor: menu.active ? '#E06F2B' : 'gray'}"
+     *ngFor="let menu of menus" class="menu__item w-28 cursor-pointer flex flex-col items-center content-center text-white border-2 px-3 py-5 space-y-2 rounded-lg"
+    >
+      <img
+        class="w-10"
+        [src]="menu.icon"
+      />
+      <p class="text-sm">{{menu.name}}</p>
+    </div>
+  </div>
+
+  <div class="mt-5 mb-7 flex items-center justify-between">
+    <h1 class="text-white text-2xl font-bold">Coffee Menu</h1>
+    <p class="text-gray text-sm">{{products.length}} coffee result</p>
+  </div>
+
+  <div class="products flex items-start flex-wrap overflow-y-scroll">
+    <div *ngFor="let product of products" class="product space-y-7 mb-7 mr-5 rounded-xl p-5 w-96 text-white bg-[#353535]">
+      <div class="flex space-x-5">
+        <img
+          class="rounded-lg object-cover w-6/12 h-28"
+          [src]="product.image"
+          alt=""
+        />
+        <div class="flex space-y-2 flex-col">
+          <p class="font-semibold">{{product.name}}</p>
+          <p class="text-xs text-[#6E6E6E]">{{product.info}}</p>
+          <p class="font-bold text-lg">${{product.price.toFixed(2)}}</p>
+        </div>
+      </div>
+
+      <div *ngIf="product.options" class="flex w-full">
+        <div *ngFor="let option of product.options" class="flex w-6/12 flex-col space-y-3">
+          <p class="font-semibold text-sm">{{option.name}}</p>
+          <div class="flex space-x-3">
+            <div
+              *ngFor="let value of option.values" class="cursor-pointer bg-[#504E4F] text-white border-main border-2 rounded-full p-2 w-10 h-10 text-xs flex items-center justify-center"
+            >
+              {{value}}%
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button (click)="addToBill(product)" class="w-full bg-main text-white rounded-full py-2">Add to Bill</button>
+    </div>
+  </div>
+  <app-bill *ngIf="productsService.showBill"></app-bill>
+</section>
