@@ -19,7 +19,12 @@ const routes: Routes = [
         component: ProductsComponent,
         outlet: 'home',
       },
-    ],
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        outlet: 'home',
+      },
+    ]
   },
   { path: 'dashboard', component: DashboardComponent },
 ];

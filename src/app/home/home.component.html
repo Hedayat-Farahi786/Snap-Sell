@@ -21,8 +21,10 @@
 
     <div [style]="{padding: menuOpened ?  '': '0 10px'}" class="flex flex-col space-y-5 w-full">
       <div
+      routerLink="/home"
+      routerLinkActive="active-link"
       [style]="{borderRadius: menuOpened ? '0': '', justifyContent: menuOpened ? 'center' : 'start'}"
-        class="home cursor-pointer px-4 py-2 w-full rounded-md space-x-2 font-semibold text-main bg-white flex items-center justify-start"
+        class="home cursor-pointer px-4 py-2 w-full rounded-md space-x-2 font-semibold text-white bg-main flex items-center justify-start"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -42,6 +44,8 @@
       </div>
 
       <div
+      routerLink="/home/dashboard"
+      routerLinkActive="active-link"
       [style]="{borderRadius: menuOpened ? '0': '', justifyContent: menuOpened ? 'center' : 'start'}"
         class="dashboard cursor-pointer px-4 py-2 w-full rounded-md space-x-2 font-semibold text-white bg-main flex items-center justify-start"
       >
@@ -69,6 +73,8 @@
         <p *ngIf="!menuOpened">Dashboard</p>
       </div>
       <div
+      routerLink="/settings"
+      routerLinkActive="active-link"
       [style]="{borderRadius: menuOpened ? '0': '', justifyContent: menuOpened ? 'center' : 'start'}"
         class="settings cursor-pointer px-4 py-2 w-full rounded-md space-x-2 font-semibold text-white bg-main flex items-center justify-start"
       >
@@ -126,9 +132,9 @@
     >
       <div class="info flex flex-col space-y-2">
         <h1 class="text-2xl text-white font-bold">McDonalds</h1>
-        <p class="text-xs text-[#8b8b8b]">Friday, 1 April 2023</p>
+        <p class="text-xs text-[#8b8b8b]">{{today}}</p>
       </div>
-      <div class="flex items-center justify-center">
+      <div class="flex items-center justify-center space-x-5">
         <div (click)="openBill()" class="text-white relative cursor-pointer">
           <div *ngIf="productsService.billProducts.length !== 0" class="absolute -top-3 -left-3 flex w-5 h-5 items-center justify-center p-2 bg-main rounded-full">
             <span class="text-xs font-bold">{{productsService.billProducts.length}}</span>

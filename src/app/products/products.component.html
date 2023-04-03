@@ -1,8 +1,9 @@
+
 <section class="products flex flex-col p-10 bg-[#2A2A2A]">
   <div class="menu__items flex space-x-5">
     <div
-    [style]="{background: menu.active? '#e0702b4c' : '', borderColor: menu.active ? '#E06F2B' : 'gray'}"
-     *ngFor="let menu of menus" class="menu__item w-28 cursor-pointer flex flex-col items-center content-center text-white border-2 px-3 py-5 space-y-2 rounded-lg"
+    [style]="{background: selectedMenu === menu.name ? '#e0702b4c' : '', borderColor: selectedMenu === menu.name ? '#E06F2B' : 'gray'}" (click)="selectMenu(menu.name)"
+     *ngFor="let menu of menus"  class="menu__item w-28 cursor-pointer flex flex-col items-center content-center text-white border-2 px-3 py-5 space-y-2 rounded-lg"
     >
       <img
         class="w-10"
@@ -13,12 +14,18 @@
   </div>
 
   <div class="mt-5 mb-7 flex items-center justify-between">
-    <h1 class="text-white text-2xl font-bold">Coffee Menu</h1>
-    <p class="text-gray text-sm">{{products.length}} coffee result</p>
+    <h1 class="text-white text-2xl font-bold">{{selectedMenu}} Menu</h1>
+    <p class="text-gray text-sm">{{products[selectedMenu].length}} {{selectedMenu}} result</p>
   </div>
 
-  <div class="products flex items-start flex-wrap overflow-y-scroll">
-    <div *ngFor="let product of products" class="product space-y-7 mb-7 mr-5 rounded-xl p-5 w-96 text-white bg-[#353535]">
+  <div class="flex items-center justify-center w-full" *ngIf="products[selectedMenu].length === 0">
+    <div class="flex flex-col space-y-5 items-center justify-center pt-20">
+      <img src="../../assets/productNoResult.png" alt="No results found">
+      <p class="text-2xl text-gray font-semibold">{{selectedMenu}} Products Not Found.</p>
+    </div>
+  </div>
+  <div class="products flex items-start flex-wrap w-full">
+    <div *ngFor="let product of products[selectedMenu]" class="product space-y-7 mb-7 mr-5 rounded-xl p-5 w-96 text-white bg-[#353535]">
       <div class="flex space-x-5">
         <img
           class="rounded-lg object-cover w-6/12 h-28"

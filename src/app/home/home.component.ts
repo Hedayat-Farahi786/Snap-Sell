@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../api/products.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,14 @@ export class HomeComponent implements OnInit {
   menuOpened: boolean = false;
 
   cameDown: boolean = false;
+  
 
-  constructor(public productsService: ProductsService) {
-  }
+  datePipe = new DatePipe('en-US');
+
+  
+  today: any = this.datePipe.transform(new Date(), 'EEEE, d MMMM yyyy');;
+  
+  constructor(public productsService: ProductsService) {}
   
   ngOnInit(): void {
     window.addEventListener('scroll', ()=> {
@@ -40,7 +46,9 @@ export class HomeComponent implements OnInit {
   }
 
   openBill(){
-    this.productsService.toggleShowBill();
+    if(this.productsService.billProducts.length > 0){
+      this.productsService.toggleShowBill();
+    }
   }
 
 }

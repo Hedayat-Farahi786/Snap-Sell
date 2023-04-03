@@ -14,7 +14,7 @@ export class ProductsComponent implements OnInit {
   menus = [
     {
       icon: '../../assets/icons/products/icons8-list-view-100.png',
-      name: 'All Menu',
+      name: 'All',
       active: true
     },
     {
@@ -38,6 +38,8 @@ export class ProductsComponent implements OnInit {
 
   products: any;
 
+  selectedMenu: any = "All";
+
  
   constructor(public productsService: ProductsService) {
     this.products = productsService.products;
@@ -45,6 +47,11 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+
+
+  selectMenu(menuName: string){
+    this.selectedMenu = menuName;
   }
 
   addToBill(product: any){
