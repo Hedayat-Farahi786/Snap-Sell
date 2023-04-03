@@ -1,27 +1,33 @@
-# Snapsell
+# Snap Sell
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.6.
+Snap Sell is a point-of-sale (POS) system built using Angular. The app is designed to help small and medium-sized businesses manage their sales and inventory.
 
-## Development server
+## Getting Started
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+To get started with Snap Sell, follow these steps:
 
-## Code scaffolding
+1. Clone the repository to your local machine
+2. Run `npm install` to install the required dependencies
+3. Run `ng serve` to start the development server
+4. Navigate to `http://localhost:4200/` in your browser
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Technology Stack
 
-## Build
+Snap Sell is built using the following technologies:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Angular: A popular front-end framework for building single-page applications
+- Tailwind CSS: A utility-first CSS framework for rapidly building custom user interfaces
+- Heroicons: A set of free icons for use in web and mobile interfaces, built by the makers of Tailwind CSS
+- MongoDB: A popular NoSQL document database used for storing and retrieving data
 
-## Running unit tests
+## Contributing
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+If you'd like to contribute to Snap Sell, please fork the repository and create a pull request. We'd love to hear your ideas for new features or improvements.
 
-## Running end-to-end tests
+## License
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Snap Sell is licensed under the MIT License. See `LICENSE` for more information.
 
-## Further help
+## Contact
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+If you have any questions or comments about Snap Sell, please email us at hedayatfarahi8@gmail.com or visit our website at snapsell.vercel.app
