@@ -1,0 +1,221 @@
+<section class="settings w-full bg-secondary flex p-10 space-x-10">
+    <div class="settings__left w-4/12">
+        <div class="bg-light pb-40 rounded-lg overflow-hidden">
+            <div *ngFor="let setting of settingsMenu; index as i" class="w-full p-5 cursor-pointer" (click)="toggleSettings(i+1)" [ngClass]="{'bg-[#E06F2B9b]': openSetting === (i+1)}">
+                <div class="flex px-5 text-white space-x-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            [attr.d]="setting.icon" />
+                    </svg>
+
+
+                    <div class="flex flex-col space-y-2">
+                        <p class="text-white text-sm" [ngClass]="{'text-main': openSetting === 1}">{{setting.title}}</p>
+                        <p class="text-gray text-xs">{{setting.info}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="settings__right w-8/12 h-full">
+        <div class="bg-light p-5 rounded-lg flex flex-col">
+            <h1 class="text-white text-xl font-semibold">{{settingsMenu[openSetting - 1].title}}</h1>
+
+
+            <div *ngIf="openSetting === 1">
+                <div class="w-full h-[1px] bg-gray mt-5 mb-10"></div>
+                <div class="flex flex-col space-y-8">
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-col w-7/12">
+                            <p class="text-xs text-gray">Name:</p>
+                            <p class="text-white text-2xl font-semibold">McDonalds</p>
+                        </div>
+                        <div class="flex items-center space-x-2 w-5/12">
+                            <input class="w-8/12 rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm text-gray" placeholder="Enter new name..." type="text">
+                            <button class="w-4/12 rounded text-white bg-main px-4 py-2 text-xs">Update</button>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-col w-7/12">
+                            <p class="text-xs text-gray">Currency:</p>
+                            <p class="text-white text-2xl font-semibold">USD $</p>
+                        </div>
+                        <div class="flex items-center space-x-2 w-5/12">
+                            <!-- <input class="w-8/6 rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm text-gray" placeholder="Enter new name..." type="text"> -->
+                            <select name="currency" class="w-8/12 rounded-md text-gray bg-secondary px-3 py-2 outline-none text-sm text-gray">
+                                <option selected disabled class="text-gray"> Choose a new currency</option>
+                                <option value="usd">USD $</option>
+                                <option value="eur">EURO €</option>
+                            </select>
+                            <button class="w-4/12 rounded text-white bg-main px-4 py-2 text-xs">Update</button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-col w-7/12">
+                            <p class="text-xs text-gray">Main Color:</p>
+                            <div class="text-white text-2xl font-semibold bg-main rounded w-max px-4 p-2 mt-2">#E06F2B</div>
+                        </div>
+                        <div class="flex items-center space-x-2 w-5/12">
+                            <input class="w-8/12 rounded-md text-white bg-secondary px-1 outline-none text-sm text-gray" type="color" value="#E06F2B">
+                            <button class="w-4/12 rounded text-white bg-main px-4 py-2 text-xs">Update</button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-col w-7/12">
+                            <p class="text-xs text-gray">Horizontal Logo:</p>
+                           <img src="../../assets/logos/logo_horizontal.png" class="w-60 mt-2" alt="">
+                           <button class="rounded text-white bg-main px-4 py-2 text-xs w-4/12 mt-6">Update</button>
+                        </div>
+                        <div class="flex flex-col items-center space-y-2 w-5/12">
+                            <!-- <input class="w-8/12 rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm text-gray" type="file"> -->
+                            <!-- <input class="w-8/12 text-sm text-gray  rounded-lg cursor-pointer" id="file_input" type="file"> -->
+                            <div class="flex items-center justify-center w-full">
+                                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                    <div class="flex flex-col items-center justify-center p-5 text-gray">
+                                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                        <div class="mb-4 flex flex-col text-sm"><span class="font-semibold text-gray">Click to upload</span><span class="text-xs text-gray">or drag and drop</span></div>
+                                        <p class="text-xs text-gray">PNG or JPG (MAX. 800x400px)</p>
+                                    </div>
+                                    <input id="dropzone-file" type="file" class="hidden" />
+                                </label>
+                            </div> 
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-col w-7/12">
+                            <p class="text-xs text-gray">Vertical Logo:</p>
+                           <img src="../../assets/logos/logo_vertical.png" class="w-44 mt-2" alt="">
+                           <button class="rounded text-white bg-main px-4 py-2 text-xs w-4/12 mt-6">Update</button>
+                        </div>
+                        <div class="flex flex-col items-center space-y-2 w-5/12">
+                            <!-- <input class="w-8/12 rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm text-gray" type="file"> -->
+                            <!-- <input class="w-8/12 text-sm text-gray  rounded-lg cursor-pointer" id="file_input" type="file"> -->
+                            <div class="flex items-center justify-center w-full">
+                                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                    <div class="flex flex-col items-center justify-center p-5 text-gray">
+                                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                        <div class="mb-4 flex flex-col text-sm"><span class="font-semibold text-gray">Click to upload</span><span class="text-xs text-gray">or drag and drop</span></div>
+                                        <p class="text-xs text-gray">PNG or JPG (MAX. 800x400px)</p>
+                                    </div>
+                                    <input id="dropzone-file" type="file" class="hidden" />
+                                </label>
+                            </div> 
+                        </div>
+                    </div>
+
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-col w-7/12">
+                            <p class="text-xs text-gray">Logo Icon:</p>
+                           <img src="../../assets/logos/logo_icon.png" class="w-40 mt-2" alt="">
+                           <button class="rounded text-white bg-main px-4 py-2 text-xs w-4/12 mt-6">Update</button>
+                        </div>
+                        <div class="flex flex-col items-center space-y-2 w-5/12">
+                            <!-- <input class="w-8/12 rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm text-gray" type="file"> -->
+                            <!-- <input class="w-8/12 text-sm text-gray  rounded-lg cursor-pointer" id="file_input" type="file"> -->
+                            <div class="flex items-center justify-center w-full">
+                                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                    <div class="flex flex-col items-center justify-center p-5 text-gray">
+                                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                        <div class="mb-4 flex flex-col text-sm"><span class="font-semibold text-gray">Click to upload</span><span class="text-xs text-gray">or drag and drop</span></div>
+                                        <p class="text-xs text-gray">PNG or JPG (MAX. 800x400px)</p>
+                                    </div>
+                                    <input id="dropzone-file" type="file" class="hidden" />
+                                </label>
+                            </div> 
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="mt-10"  *ngIf="openSetting === 3">
+                <ul class="text-white w-full flex text-sm">
+                    <li *ngFor="let item of products; index as i" (click)="toggleTabs(i+1)"
+                        [ngClass]="{'text-main font-semibold border-main': openTab === (i+1), 'flex-1': i === (products.length - 1)}"
+                        class="transition-all duration-200 ease-in-out cursor-pointer px-5 border-b border-gray pb-2">
+                        {{item.menuName}}</li>
+                 
+                </ul>
+                <div class="relative flex flex-col min-w-0 break-words w-full mb-10 mt-5">
+                    <div class="px-4 py-5 flex-auto">
+                        <div class="tab-content tab-space">
+                            <div class="flex flex-wrap">
+                                <div class="product_card cursor-pointer mr-5 mb-5 min-h-[250px] text-main flex flex-col items-center justify-center space-y-5 w-max border-dashed border rounded px-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                    <p>Add new product</p>
+                                </div>
+                                <div *ngFor="let product of products[openTab - 1].items" class="product_card pt-5 mr-5 mb-5 text-main flex flex-col space-y-5 items-center justify-between border-[#6D6D6D] border rounded">
+                                    <img [src]="product.image" class="rounded-full w-[100px] h-[100px] object-cover" alt="">
+                                    <p class="text-center px-5 text-white text-sm">{{product.name}}</p>
+                                    <div class="text-center text-xs text-gray">
+                                        <p>${{product.price}} <span class="text-white">*</span> 20 Bowls</p>
+                                    </div>
+                                    <div class="bg-[#E06F2B3c] cursor-pointer w-full flex items-center justify-center space-x-2 text-xs p-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                          </svg>                                          
+                                        <p class="font-semibold">Edit Product</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div *ngIf="openSetting === 4">
+                <div class="w-full h-[1px] bg-gray mt-5 mb-10"></div>
+
+
+                <div class="flex flex-col items-center justify-center space-y-8 mb-10">
+                    <div class="flex flex-col space-y-2 w-8/12">
+                        <p class="text-xs text-gray">Current Password:</p>
+                        <input class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm text-gray" placeholder="Current Password..." type="password">
+                    </div>
+                    <div class="flex flex-col space-y-2 w-8/12">
+                        <p class="text-xs text-gray">New Password:</p>
+                        <input class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm text-gray" placeholder="New password..." type="password">
+                    </div>
+                    <div class="flex flex-col space-y-2 w-8/12">
+                        <p class="text-xs text-gray">Confirm New Password:</p>
+                        <input class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm text-gray" placeholder="Confirm new password..." type="password">
+                    </div>
+
+                    <div class="flex items-center justify-center w-8/12">
+                        <button class="w-6/12 rounded bg-main text-white p-3">Update Password</button>
+                    </div>
+                    
+                </div>
+                <!-- <div class="flex flex-col space-y-8">
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-col w-7/12">
+                            <p class="text-xs text-gray">Name:</p>
+                            <p class="text-white text-2xl font-semibold">McDonalds</p>
+                        </div>
+                        <div class="flex items-center space-x-2 w-5/12">
+                            <input class="w-8/12 rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm text-gray" placeholder="Enter new name..." type="text">
+                            <button class="w-4/12 rounded text-white bg-main px-4 py-2 text-xs">Update</button>
+                        </div>
+                    </div>
+
+                </div> -->
+            </div>
+
+        </div>
+    </div>
+</section>

@@ -7,7 +7,6 @@ export class ProductsService {
 
 
   products = {
-    "All": [],
     "Steaks": [],
     "Coffee": [
       {

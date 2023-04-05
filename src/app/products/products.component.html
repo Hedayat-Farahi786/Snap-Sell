@@ -13,46 +13,97 @@
     </div>
   </div>
 
+  
+
+  
   <div class="mt-5 mb-7 flex items-center justify-between">
     <h1 class="text-white text-2xl font-bold">{{selectedMenu}} Menu</h1>
-    <p class="text-gray text-sm">{{products[selectedMenu].length}} {{selectedMenu}} result</p>
+    <!-- <p *ngIf="selectedMenu !== 'All'" class="text-gray text-sm">{{products[selectedMenu].length}} {{selectedMenu}} result</p> -->
   </div>
 
-  <div class="flex items-center justify-center w-full" *ngIf="products[selectedMenu].length === 0">
-    <div class="flex flex-col space-y-5 items-center justify-center pt-20">
-      <img src="../../assets/productNoResult.png" alt="No results found">
-      <p class="text-2xl text-gray font-semibold">{{selectedMenu}} Products Not Found.</p>
-    </div>
-  </div>
-  <div class="products flex items-start flex-wrap w-full">
-    <div *ngFor="let product of products[selectedMenu]" class="product space-y-7 mb-7 mr-5 rounded-xl p-5 w-96 text-white bg-[#353535]">
-      <div class="flex space-x-5">
-        <img
-          class="rounded-lg object-cover w-6/12 h-28"
-          [src]="product.image"
-          alt=""
-        />
-        <div class="flex space-y-2 flex-col">
-          <p class="font-semibold">{{product.name}}</p>
-          <p class="text-xs text-[#6E6E6E]">{{product.info}}</p>
-          <p class="font-bold text-lg">${{product.price.toFixed(2)}}</p>
-        </div>
+    <div class="flex items-center justify-center w-full" *ngIf="products[selectedMenu]?.length === 0">
+      <div class="flex flex-col space-y-5 items-center justify-center pt-20">
+        <img src="../../assets/productNoResult.png" alt="No results found">
+        <p class="text-2xl text-gray font-semibold">{{selectedMenu}} Products Not Found.</p>
       </div>
+    </div>
 
-      <div *ngIf="product.options" class="flex w-full">
-        <div *ngFor="let option of product.options" class="flex w-6/12 flex-col space-y-3">
-          <p class="font-semibold text-sm">{{option.name}}</p>
-          <div class="flex space-x-3">
-            <div
-              *ngFor="let value of option.values" class="cursor-pointer bg-[#504E4F] text-white border-main border-2 rounded-full p-2 w-10 h-10 text-xs flex items-center justify-center"
-            >
-              {{value}}%
+  <div class="products flex items-start flex-wrap w-full">
+
+    <div *ngIf="selectedMenu === 'All'">
+      <div *ngFor="let allProd of allProducts" class="flex flex-col">
+       <div class="w-full flex items-center justify-between">
+        <h1 class="text-white font-semibold">{{allProd.menuName}}</h1>
+        <p class="text-gray text-xs">{{allProd.items.length}} Products</p>
+       </div>
+        <div class="w-full h-[1px] bg-[#6E6E6E]"></div>
+        <div class="flex items-start flex-wrap w-full">
+          <div class="w-full flex items-center justify-center h-10 pt-5">
+            <h1 *ngIf="allProd.items.length == 0" class="text-gray">No Products</h1>
+          </div>
+          <div *ngFor="let product of allProd.items" class="product space-y-7 mb-7 mr-5 rounded-xl p-5 w-96 text-white bg-[#353535]">
+            <div class="flex space-x-5">
+              <img
+                class="rounded-lg object-cover w-6/12 h-28"
+                [src]="product.image"
+                alt=""
+              />
+              <div class="flex space-y-2 flex-col">
+                <p class="font-semibold">{{product.name}}</p>
+                <p class="text-xs text-[#6E6E6E]">{{product.info}}</p>
+                <p class="font-bold text-lg">${{product.price.toFixed(2)}}</p>
+              </div>
             </div>
+      
+            <div *ngIf="product.options" class="flex w-full">
+              <div *ngFor="let option of product.options" class="flex w-6/12 flex-col space-y-3">
+                <p class="font-semibold text-sm">{{option.name}}</p>
+                <div class="flex space-x-3">
+                  <div
+                    *ngFor="let value of option.values" class="cursor-pointer bg-[#504E4F] text-white border-main border-2 rounded-full p-2 w-10 h-10 text-xs flex items-center justify-center"
+                  >
+                    {{value}}%
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <button (click)="addToBill(product)" class="w-full bg-main text-white rounded-full py-2">Add to Bill</button>
           </div>
         </div>
       </div>
-
-      <button (click)="addToBill(product)" class="w-full bg-main text-white rounded-full py-2">Add to Bill</button>
+    </div>
+    
+    <div *ngIf="selectedMenu !== 'All' && products[selectedMenu]?.length !== 0" class="flex items-start flex-wrap w-full">
+      <div *ngFor="let product of products[selectedMenu]" class="product space-y-7 mb-7 mr-5 rounded-xl p-5 w-96 text-white bg-[#353535]">
+        <div class="flex space-x-5">
+          <img
+            class="rounded-lg object-cover w-6/12 h-28"
+            [src]="product.image"
+            alt=""
+          />
+          <div class="flex space-y-2 flex-col">
+            <p class="font-semibold">{{product.name}}</p>
+            <p class="text-xs text-[#6E6E6E]">{{product.info}}</p>
+            <p class="font-bold text-lg">${{product.price.toFixed(2)}}</p>
+          </div>
+        </div>
+  
+        <div *ngIf="product.options" class="flex w-full">
+          <div *ngFor="let option of product.options" class="flex w-6/12 flex-col space-y-3">
+            <p class="font-semibold text-sm">{{option.name}}</p>
+            <div class="flex space-x-3">
+              <div
+                *ngFor="let value of option.values" class="cursor-pointer bg-[#504E4F] text-white border-main border-2 rounded-full p-2 w-10 h-10 text-xs flex items-center justify-center"
+              >
+                {{value}}%
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <button (click)="addToBill(product)" class="w-full bg-main text-white rounded-full py-2">Add to Bill</button>
+      </div>
     </div>
   </div>
   <app-bill *ngIf="productsService.showBill"></app-bill>

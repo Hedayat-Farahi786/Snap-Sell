@@ -1,6 +1,8 @@
 <section class="home flex h-screen bg-secondary">
-  <div [style]="{width: menuOpened ? '5vw' : '15vw'}" class="h-full bg-red"></div>
-  <div [style]="{width: menuOpened ? '5vw' : '15vw'}" class="h-full fixed py-5 bg-main flex flex-col items-center">
+  <div [style]="{width: menuOpened ? '5vw' : '15vw'}" class="h-full"></div>
+  <!-- <div [style]="{width: menuOpened ? '5vw' : '15vw'}" class="h-full fixed py-5 bg-main flex flex-col items-center "> -->
+    <div [style]="{ width: menuOpened ? '5vw' : '15vw' }" class="h-full fixed py-5 bg-main flex flex-col items-center transition-all duration-500 linear">
+
     <div (click)="toggleSidebar()" class="transition-all duration-200 ease-in-out absolute -right-5 cursor-pointer w-8 h-8 bg-white text-main flex items-center justify-center rounded-full">
       <svg *ngIf="menuOpened" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="transition-all duration-200 ease-in-out w-5 h-5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -21,33 +23,24 @@
 
     <div [style]="{padding: menuOpened ?  '': '0 10px'}" class="flex flex-col space-y-5 w-full">
       <div
-      routerLink="/home"
+      [routerLink]="['/home']"
       routerLinkActive="active-link"
       [style]="{borderRadius: menuOpened ? '0': '', justifyContent: menuOpened ? 'center' : 'start'}"
         class="home cursor-pointer px-4 py-2 w-full rounded-md space-x-2 font-semibold text-white bg-main flex items-center justify-start"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          [class]="menuOpened ? 'w-6 h-6' : 'w-5 h-5'"
-        >
-          <path
-            d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z"
-          />
-          <path
-            d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" [class]="menuOpened ? 'w-6 h-6' : 'w-5 h-5'">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
         </svg>
+        
 
         <p *ngIf="!menuOpened">Home</p>
       </div>
 
       <div
-      routerLink="/home/dashboard"
+      [routerLink]="[{ outlets: { home: ['dashboard'] } }]"
       routerLinkActive="active-link"
       [style]="{borderRadius: menuOpened ? '0': '', justifyContent: menuOpened ? 'center' : 'start'}"
-        class="dashboard cursor-pointer px-4 py-2 w-full rounded-md space-x-2 font-semibold text-white bg-main flex items-center justify-start"
+        class="dashboard transition-all duration-900 ease-in-out cursor-pointer px-4 py-2 w-full rounded-md space-x-2 font-semibold text-white bg-main flex items-center justify-start"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -73,10 +66,10 @@
         <p *ngIf="!menuOpened">Dashboard</p>
       </div>
       <div
-      routerLink="/settings"
+      [routerLink]="[{ outlets: { home: ['settings'] } }]"
       routerLinkActive="active-link"
       [style]="{borderRadius: menuOpened ? '0': '', justifyContent: menuOpened ? 'center' : 'start'}"
-        class="settings cursor-pointer px-4 py-2 w-full rounded-md space-x-2 font-semibold text-white bg-main flex items-center justify-start"
+        class="settings transition-all duration-900 ease-in-out cursor-pointer px-4 py-2 w-full rounded-md space-x-2 font-semibold text-white bg-main flex items-center justify-start"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +101,7 @@
       </svg>
        -->
     <div
-      class="settings cursor-pointer rounded-md space-x-2 font-normal text-white bg-main flex items-center content-center absolute bottom-10 left-8"
+      class="settings cursor-pointer rounded-md space-x-2 font-normal text-white flex items-center content-center absolute bottom-10 left-8"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -135,6 +128,7 @@
         <p class="text-xs text-[#8b8b8b]">{{today}}</p>
       </div>
       <div class="flex items-center justify-center space-x-5">
+        <span class="text-gray text-xs font-medium mr-2 px-2.5 py-0.5 rounded border border-gray text-white"><span class="text-gray mr-2">Version:</span> {{version}}</span>
         <div (click)="openBill()" class="text-white relative cursor-pointer">
           <div *ngIf="productsService.billProducts.length !== 0" class="absolute -top-3 -left-3 flex w-5 h-5 items-center justify-center p-2 bg-main rounded-full">
             <span class="text-xs font-bold">{{productsService.billProducts.length}}</span>
@@ -213,7 +207,7 @@
       </div>
     </div>
     <div class="bg-secondary h-full">
-      <div *ngIf="cameDown" (click)="scrollToTop()" class="bg-white inline-block text-main p-1 rounded-full fixed bottom-8 right-8 cursor-pointer transition-all duration-200 ease-in-out">
+      <div *ngIf="cameDown" (click)="scrollToTop()" class="bg-white inline-block text-main p-1 rounded-full fixed transition-all bottom-8 right-8 cursor-pointer transition-all duration-200 ease-in-out">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" />
         </svg>

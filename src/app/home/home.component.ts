@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../api/products.service';
 import { DatePipe } from '@angular/common';
+const appVersion = require('../../../package.json').version;
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,8 @@ export class HomeComponent implements OnInit {
   menuOpened: boolean = false;
 
   cameDown: boolean = false;
+
+  version = appVersion;
   
 
   datePipe = new DatePipe('en-US');
