@@ -1,12 +1,12 @@
 <section class="settings w-full bg-secondary flex p-10 space-x-10">
     <div class="settings__left w-4/12">
         <div class="bg-light pb-40 rounded-lg overflow-hidden">
-            <div *ngFor="let setting of settingsMenu; index as i" class="w-full p-5 cursor-pointer" (click)="toggleSettings(i+1)" [ngClass]="{'bg-[#E06F2B9b]': openSetting === (i+1)}">
+            <div *ngFor="let setting of settingsMenu; index as i" class="w-full p-5 cursor-pointer"
+                (click)="toggleSettings(i+1)" [ngClass]="{'bg-[#E06F2B9b]': openSetting === (i+1)}">
                 <div class="flex px-5 text-white space-x-3">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            [attr.d]="setting.icon" />
+                        <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="setting.icon" />
                     </svg>
 
 
@@ -21,91 +21,125 @@
 
     </div>
     <div class="settings__right w-8/12 h-full">
-        <div class="bg-light p-5 rounded-lg flex flex-col">
-            <h1 class="text-white text-xl font-semibold">{{settingsMenu[openSetting - 1].title}}</h1>
+        <div class="bg-light p-5 rounded-lg flex flex-col relative">
+            <h1 class="text-white text-xl font-semibold">{{settingsMenu[openSetting -
+                1].title}}</h1>
 
 
-            <div *ngIf="openSetting === 1">
+            <form [formGroup]="storeForm" (submit)="submitStoreData()" *ngIf="openSetting === 1">
+                <div class="flex items-center justify-end">
+                    <button
+                        class="w-3/12 rounded text-white font-semibold bg-main px-4 py-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed">Update</button>
+                </div>
                 <div class="w-full h-[1px] bg-gray mt-5 mb-10"></div>
                 <div class="flex flex-col space-y-8">
                     <div class="flex items-center justify-between">
-                        <div class="flex flex-col w-7/12">
+                        <div class="flex flex-col w-7/12 break-words mr-5">
                             <p class="text-xs text-gray">Name:</p>
-                            <p class="text-white text-2xl font-semibold">McDonalds</p>
+                            <p class="text-white text-2xl font-semibold">{{this.storeForm.get('name')?.value}}</p>
                         </div>
-                        <div class="flex items-center space-x-2 w-5/12">
-                            <input class="w-8/12 rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm text-gray" placeholder="Enter new name..." type="text">
-                            <button class="w-4/12 rounded text-white bg-main px-4 py-2 text-xs">Update</button>
+                        <div class="flex flex-col space-y-2 w-5/12">
+                            <input formControlName="name"
+                                class="w-full rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm"
+                                placeholder="Enter new name..." type="text">
+                            <!-- <button class="w-4/12 rounded text-white bg-main px-4 py-2 text-xs">Update</button> -->
                         </div>
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex flex-col w-7/12">
                             <p class="text-xs text-gray">Currency:</p>
-                            <p class="text-white text-2xl font-semibold">USD $</p>
+                            <p class="text-white text-2xl font-semibold">
+                                {{currencyConverter(this.storeForm.get('currency')?.value)}}</p>
                         </div>
-                        <div class="flex items-center space-x-2 w-5/12">
+                        <div class="flex flex-col space-y-2 w-5/12">
                             <!-- <input class="w-8/6 rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm text-gray" placeholder="Enter new name..." type="text"> -->
-                            <select name="currency" class="w-8/12 rounded-md text-gray bg-secondary px-3 py-2 outline-none text-sm text-gray">
+                            <select formControlName="currency" name="currency"
+                                class="w-full rounded-md text-gray bg-secondary px-3 py-2 outline-none text-sm">
                                 <option selected disabled class="text-gray"> Choose a new currency</option>
                                 <option value="usd">USD $</option>
                                 <option value="eur">EURO €</option>
                             </select>
-                            <button class="w-4/12 rounded text-white bg-main px-4 py-2 text-xs">Update</button>
+                            <!-- <button class="w-4/12 rounded text-white bg-main px-4 py-2 text-xs">Update</button> -->
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between">
                         <div class="flex flex-col w-7/12">
                             <p class="text-xs text-gray">Main Color:</p>
-                            <div class="text-white text-2xl font-semibold bg-main rounded w-max px-4 p-2 mt-2">#E06F2B</div>
+                            <div [ngStyle]="{background: this.storeForm.get('color')?.value}"
+                                class="text-white text-2xl font-semibold rounded w-max px-4 p-2 mt-2">
+                                {{this.storeForm.get('color')?.value}}
+                            </div>
                         </div>
                         <div class="flex items-center space-x-2 w-5/12">
-                            <input class="w-8/12 rounded-md text-white bg-secondary px-1 outline-none text-sm text-gray" type="color" value="#E06F2B">
-                            <button class="w-4/12 rounded text-white bg-main px-4 py-2 text-xs">Update</button>
+                            <input formControlName="color"
+                                class="w-full rounded-md text-white bg-secondary px-1 outline-none text-sm" type="color"
+                                value="#E06F2B">
+                            <!-- <button class="w-4/12 rounded text-white bg-main px-4 py-2 text-xs">Update</button> -->
                         </div>
                     </div>
 
                     <div class="flex items-center justify-between">
                         <div class="flex flex-col w-7/12">
                             <p class="text-xs text-gray">Horizontal Logo:</p>
-                           <img src="../../assets/logos/logo_horizontal.png" class="w-60 mt-2" alt="">
-                           <button class="rounded text-white bg-main px-4 py-2 text-xs w-4/12 mt-6">Update</button>
+                            <img [src]="hrImagePreview" class="w-60 mt-2" alt="">
+                            <!-- <button class="rounded text-white bg-main px-4 py-2 text-xs w-4/12 mt-6">Update</button> -->
                         </div>
                         <div class="flex flex-col items-center space-y-2 w-5/12">
                             <!-- <input class="w-8/12 rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm text-gray" type="file"> -->
                             <!-- <input class="w-8/12 text-sm text-gray  rounded-lg cursor-pointer" id="file_input" type="file"> -->
                             <div class="flex items-center justify-center w-full">
-                                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <label for="dropzone-file"
+                                    class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                     <div class="flex flex-col items-center justify-center p-5 text-gray">
-                                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                        <div class="mb-4 flex flex-col text-sm"><span class="font-semibold text-gray">Click to upload</span><span class="text-xs text-gray">or drag and drop</span></div>
-                                        <p class="text-xs text-gray">PNG or JPG (MAX. 800x400px)</p>
+                                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                                            </path>
+                                        </svg>
+                                        <div class="mb-4 flex flex-col text-sm"><span
+                                                class="font-semibold text-gray">Click to upload</span><span
+                                                class="text-xs text-gray">or drag and drop</span></div>
+                                        <p class="text-xs text-gray">PNG, JPG OR JPEG (MAX. 800x400px)</p>
                                     </div>
-                                    <input id="dropzone-file" type="file" class="hidden" />
+                                    <input (change)="onHrImageSelected($event)" accept=".jpg,.png,.jpeg"
+                                        formControlName="hrImage" id="dropzone-file" type="file" class="hidden" />
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
-                    
+
                     <div class="flex items-center justify-between">
                         <div class="flex flex-col w-7/12">
                             <p class="text-xs text-gray">Vertical Logo:</p>
-                           <img src="../../assets/logos/logo_vertical.png" class="w-44 mt-2" alt="">
-                           <button class="rounded text-white bg-main px-4 py-2 text-xs w-4/12 mt-6">Update</button>
+                            <img [src]="vtImagePreview" class="w-44 mt-2" alt="">
+                            <!-- <button class="rounded text-white bg-main px-4 py-2 text-xs w-4/12 mt-6">Update</button> -->
                         </div>
                         <div class="flex flex-col items-center space-y-2 w-5/12">
                             <!-- <input class="w-8/12 rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm text-gray" type="file"> -->
                             <!-- <input class="w-8/12 text-sm text-gray  rounded-lg cursor-pointer" id="file_input" type="file"> -->
                             <div class="flex items-center justify-center w-full">
-                                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <label for="dropzone-file2"
+                                    class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                     <div class="flex flex-col items-center justify-center p-5 text-gray">
-                                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                        <div class="mb-4 flex flex-col text-sm"><span class="font-semibold text-gray">Click to upload</span><span class="text-xs text-gray">or drag and drop</span></div>
-                                        <p class="text-xs text-gray">PNG or JPG (MAX. 800x400px)</p>
+                                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                                            </path>
+                                        </svg>
+                                        <div class="mb-4 flex flex-col text-sm"><span
+                                                class="font-semibold text-gray">Click to upload</span><span
+                                                class="text-xs text-gray">or drag and drop</span></div>
+                                        <p class="text-xs text-gray">PNG, JPG or JPEG (MAX. 800x400px)</p>
                                     </div>
-                                    <input id="dropzone-file" type="file" class="hidden" />
+                                    <input (change)="onVtImageSelected($event)" accept=".jpg,.png,.jpeg"
+                                        formControlName="vtImage" id="dropzone-file2" type="file" class="hidden" />
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
 
@@ -113,43 +147,229 @@
                     <div class="flex items-center justify-between">
                         <div class="flex flex-col w-7/12">
                             <p class="text-xs text-gray">Logo Icon:</p>
-                           <img src="../../assets/logos/logo_icon.png" class="w-40 mt-2" alt="">
-                           <button class="rounded text-white bg-main px-4 py-2 text-xs w-4/12 mt-6">Update</button>
+                            <img [src]="logoImagePreview" class="w-40 mt-2" alt="">
+                            <!-- <button class="rounded text-white bg-main px-4 py-2 text-xs w-4/12 mt-6">Update</button> -->
                         </div>
                         <div class="flex flex-col items-center space-y-2 w-5/12">
                             <!-- <input class="w-8/12 rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm text-gray" type="file"> -->
                             <!-- <input class="w-8/12 text-sm text-gray  rounded-lg cursor-pointer" id="file_input" type="file"> -->
                             <div class="flex items-center justify-center w-full">
-                                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                <label for="dropzone-file3"
+                                    class="flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                     <div class="flex flex-col items-center justify-center p-5 text-gray">
-                                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                        <div class="mb-4 flex flex-col text-sm"><span class="font-semibold text-gray">Click to upload</span><span class="text-xs text-gray">or drag and drop</span></div>
-                                        <p class="text-xs text-gray">PNG or JPG (MAX. 800x400px)</p>
+                                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                                            </path>
+                                        </svg>
+                                        <div class="mb-4 flex flex-col text-sm"><span
+                                                class="font-semibold text-gray">Click to upload</span><span
+                                                class="text-xs text-gray">or drag and drop</span></div>
+                                        <p class="text-xs text-gray">PNG, JPG or JPEG (MAX. 800x400px)</p>
                                     </div>
-                                    <input id="dropzone-file" type="file" class="hidden" />
+                                    <input (change)="onLogoImageSelected($event)" accept=".jpg,.png,.jpeg"
+                                        formControlName="logoImage" id="dropzone-file3" type="file" class="hidden" />
                                 </label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
 
 
                 </div>
+            </form>
+
+
+            <div *ngIf="openSetting === 2">
+                <div class="w-full h-[1px] bg-gray mt-5 mb-10"></div>
+
+                <div *ngIf="categoriesService.showAddCategory"
+                    class="absolute top-0 bottom-0 right-0 left-0 transition-all duration-200 ease-in-out bg-secondary rounded-lg z-10 flex justify-center">
+
+                    <form [formGroup]="addCategoryForm" (submit)="addNewCategory()"
+                        class="bg-light rounded-lg p-5 h-max w-max">
+                        <div class="flex items-center justify-between text-main">
+                            <div class="text-white text-xl font-semibold flex items-center space-x-2"><span
+                                    (click)="categoriesService.toggleShowAddCategory()"
+                                    class="hover:text-main cursor-pointer transition-all duration-200 ease-in-out">Categories</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-main">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+
+                                <span>Add new category</span>
+                            </div>
+                            <svg (click)="categoriesService.toggleShowAddCategory()" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="w-6 h-6 cursor-pointer">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </div>
+                        <div class="w-full h-[1px] bg-gray mt-5 mb-10"></div>
+                        <div class="flex flex-col items-center justify-center space-y-8 mb-10">
+                            <img class="w-36" [src]="categoriesService.categoriesPlaceholderImage" />
+                            <div class="flex flex-col space-y-2 w-11/12">
+                                <p class="text-xs text-gray">Choose a Logo:</p>
+                                <div class="icons w-full flex flex-wrap gap-1">
+                                    <div *ngFor="let icon of categoriesIcons" (click)="selectCategoryIcon(icon.id)"
+                                        [ngClass]="{'border-main bg-[#E06F2B3c]': icon.selected}"
+                                        class="w-max flex items-center justify-center border border-[#6D6D6D] p-2 rounded transition-all duration-200 linear hover:bg-[#E06F2B3c] cursor-pointer">
+                                        <img class="w-12" [src]="icon.icon" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Category Name:</p>
+                                <input formControlName="name"
+                                    class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                                    placeholder="Category name..." type="text">
+
+                                <div
+                                    *ngIf="addCategoryForm.get('name')?.invalid && (addCategoryForm.get('name')?.dirty || addCategoryForm.get('name')?.touched)">
+                                    <p *ngIf="addCategoryForm.get('name')?.errors?.['required']"
+                                        class="text-xs text-main">Category name is required!</p>
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="flex items-center justify-center w-8/12">
+                                <button type="submit" [disabled]="addCategoryForm.invalid"
+                                    class="w-6/12 rounded bg-main text-white p-3 font-semibold disabled:opacity-50 disabled:cursor-not-allowed">Add
+                                    Category</button>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+
+                <div *ngIf="categoriesService.showEditCategory"
+                    class="absolute top-0 bottom-0 right-0 left-0 transition-all duration-200 ease-in-out bg-secondary rounded-lg z-10 flex justify-center">
+
+                    <form [formGroup]="categoriesService.editCategoryForm" (submit)="editCategory()"
+                        class="bg-light rounded-lg p-5 h-max w-max">
+                        <div class="flex items-center justify-between text-main">
+                            <div class="text-white text-xl font-semibold flex items-center space-x-2"><span
+                                    (click)="categoriesService.toggleEditCategory()"
+                                    class="hover:text-main cursor-pointer transition-all duration-200 ease-in-out">Categories</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-main">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+
+                                <span>Edit category</span>
+                            </div>
+                            <svg (click)="categoriesService.toggleShowAddCategory()" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="w-6 h-6 cursor-pointer">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </div>
+                        <div class="w-full h-[1px] bg-gray mt-5 mb-10"></div>
+                        <div class="flex flex-col items-center justify-center space-y-8 mb-10">
+                            <img class="w-36" [src]="categoriesService.categoriesPlaceholderImage" />
+                            <div class="flex flex-col space-y-2 w-11/12">
+                                <p class="text-xs text-gray">Choose a Logo:</p>
+                                <div class="w-full flex flex-wrap gap-1">
+                                    <div *ngFor="let icon of categoriesIcons" (click)="editCategoryIcon(icon.id)"
+                                        [ngClass]="{'border-main bg-[#E06F2B3c]': icon.selected}"
+                                        class="w-max flex items-center justify-center border border-[#6D6D6D] p-2 rounded transition-all duration-200 linear hover:bg-[#E06F2B3c] cursor-pointer">
+                                        <img class="w-12" [src]="icon.icon" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Category Name:</p>
+                                <input formControlName="name" [placeholder]="categoriesService.editCategoryName"
+                                    class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                                    placeholder="Category name..." type="text">
+                                <div
+                                    *ngIf="categoriesService.editCategoryForm.get('name')?.invalid && (categoriesService.editCategoryForm.get('name')?.dirty || categoriesService.editCategoryForm.get('name')?.touched)">
+                                    <p *ngIf="categoriesService.editCategoryForm.get('name')?.errors?.['required']"
+                                        class="text-xs text-main">Category name is required!</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-center w-8/12">
+                                <button type="submit"
+                                    class="w-6/12 rounded bg-main text-white p-3 font-semibold">Edit
+                                    Category</button>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="relative flex flex-col min-w-0 break-words w-full mb-10 mt-5">
+                    <div class="px-4 py-5 flex-auto">
+                        <div class="tab-content tab-space">
+                            <div class="flex flex-wrap">
+                                <div (click)="categoriesService.toggleShowAddCategory()"
+                                    class="product_card cursor-pointer mr-5 mb-5 min-h-[250px] text-main flex flex-col items-center justify-center space-y-5 w-max border-dashed border rounded px-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                    <p>Add new Category</p>
+                                </div>
+                                <div *ngFor="let category of categoriesService.categories | slice:1"
+                                    class="product_card transition-all duration-200 linear hover:bg-[#E06F2B3c] cursor-pointer pt-5 mr-5 mb-5 text-main flex flex-col items-center justify-between border-[#6D6D6D] border rounded">
+                                    <div class="flex flex-col items-center space-y-5">
+                                        <img class="w-36" [src]="category.icon" />
+                                        <p class="text-lg font-semibold text-white">{{category.name}}</p>
+                                    </div>
+                                    <div class="w-full flex">
+
+                                        <div (click)="categoriesService.openEditCategory(category)"
+                                            class="bg-[#E06F2B3c] hover:text-white cursor-pointer w-full flex items-center justify-center space-x-2 text-xs p-4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                            </svg>
+                                            <p class="font-semibold">Edit</p>
+                                        </div>
+                                        <div class="w-[1px] h-full bg-[#6D6D6D]"></div>
+                                        <div (click)="categoriesService.deleteCategory(category)"
+                                            class="bg-[#C628283c] hover:text-white text-[#C62828] cursor-pointer w-full flex items-center justify-center space-x-2 text-xs p-4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                            </svg>
+
+                                            <p class="font-semibold">Delete</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-
-            <div class="mt-10"  *ngIf="openSetting === 3">
+            <div class="mt-10" *ngIf="openSetting === 3">
                 <ul class="text-white w-full flex text-sm">
                     <li *ngFor="let item of products; index as i" (click)="toggleTabs(i+1)"
                         [ngClass]="{'text-main font-semibold border-main': openTab === (i+1), 'flex-1': i === (products.length - 1)}"
                         class="transition-all duration-200 ease-in-out cursor-pointer px-5 border-b border-gray pb-2">
                         {{item.menuName}}</li>
-                 
+
                 </ul>
                 <div class="relative flex flex-col min-w-0 break-words w-full mb-10 mt-5">
                     <div class="px-4 py-5 flex-auto">
                         <div class="tab-content tab-space">
                             <div class="flex flex-wrap">
-                                <div class="product_card cursor-pointer mr-5 mb-5 min-h-[250px] text-main flex flex-col items-center justify-center space-y-5 w-max border-dashed border rounded px-5">
+                                <div
+                                    class="product_card cursor-pointer mr-5 mb-5 min-h-[250px] text-main flex flex-col items-center justify-center space-y-5 w-max border-dashed border rounded px-5">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -157,16 +377,21 @@
                                     </svg>
                                     <p>Add new product</p>
                                 </div>
-                                <div *ngFor="let product of products[openTab - 1].items" class="product_card pt-5 mr-5 mb-5 text-main flex flex-col space-y-5 items-center justify-between border-[#6D6D6D] border rounded">
-                                    <img [src]="product.image" class="rounded-full w-[100px] h-[100px] object-cover" alt="">
-                                    <p class="text-center px-5 text-white text-sm">{{product.name}}</p>
+                                <div *ngFor="let product of products[openTab - 1].items"
+                                    class="product_card pt-5 mr-5 mb-5 text-main flex flex-col space-y-5 items-center justify-between border-[#6D6D6D] border rounded">
+                                    <img [src]="product.image" class="rounded-full w-[100px] h-[100px] object-cover"
+                                        alt="">
+                                    <p class="text-center font-semibold px-5 text-white text-sm">{{product.name}}</p>
                                     <div class="text-center text-xs text-gray">
                                         <p>${{product.price}} <span class="text-white">*</span> 20 Bowls</p>
                                     </div>
-                                    <div class="bg-[#E06F2B3c] cursor-pointer w-full flex items-center justify-center space-x-2 text-xs p-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                          </svg>                                          
+                                    <div
+                                        class="bg-[#E06F2B3c] cursor-pointer w-full flex items-center justify-center space-x-2 text-xs p-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                        </svg>
                                         <p class="font-semibold">Edit Product</p>
                                     </div>
                                 </div>
@@ -182,40 +407,46 @@
                 <div class="w-full h-[1px] bg-gray mt-5 mb-10"></div>
 
 
-                <div class="flex flex-col items-center justify-center space-y-8 mb-10">
+                <form [formGroup]="securityForm" (submit)="updatePassword()" class="flex flex-col items-center justify-center space-y-8 mb-10">
                     <div class="flex flex-col space-y-2 w-8/12">
                         <p class="text-xs text-gray">Current Password:</p>
-                        <input class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm text-gray" placeholder="Current Password..." type="password">
+                        <input formControlName="currentPassword" class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                            placeholder="Current Password..." type="password">
+                            <div
+                                    *ngIf="securityForm.get('currentPassword')?.invalid && (securityForm.get('currentPassword')?.dirty || securityForm.get('currentPassword')?.touched)">
+                                    <p *ngIf="securityForm.get('currentPassword')?.errors?.['required']"
+                                        class="text-xs text-main">Current password is required!</p>
+                                </div>
                     </div>
                     <div class="flex flex-col space-y-2 w-8/12">
                         <p class="text-xs text-gray">New Password:</p>
-                        <input class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm text-gray" placeholder="New password..." type="password">
+                        <input formControlName="newPassword" class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                            placeholder="New password..." type="password">
+                            <div
+                                    *ngIf="securityForm.get('newPassword')?.invalid && (securityForm.get('newPassword')?.dirty || securityForm.get('newPassword')?.touched)">
+                                    <p *ngIf="securityForm.get('newPassword')?.errors?.['required']"
+                                        class="text-xs text-main">New password is required!</p>
+                                </div>
                     </div>
                     <div class="flex flex-col space-y-2 w-8/12">
                         <p class="text-xs text-gray">Confirm New Password:</p>
-                        <input class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm text-gray" placeholder="Confirm new password..." type="password">
+                        <input formControlName="confirmNewPassword" class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                            placeholder="Confirm new password..." type="password">
+                            <div
+                                    *ngIf="securityForm.get('confirmNewPassword')?.invalid && (securityForm.get('confirmNewPassword')?.dirty || securityForm.get('confirmNewPassword')?.touched)">
+                                    <p *ngIf="securityForm.get('confirmNewPassword')?.errors?.['required']"
+                                        class="text-xs text-main">Confirm new password is required!</p>
+                                </div>
                     </div>
 
                     <div class="flex items-center justify-center w-8/12">
-                        <button class="w-6/12 rounded bg-main text-white p-3">Update Password</button>
-                    </div>
-                    
-                </div>
-                <!-- <div class="flex flex-col space-y-8">
-                    <div class="flex items-center justify-between">
-                        <div class="flex flex-col w-7/12">
-                            <p class="text-xs text-gray">Name:</p>
-                            <p class="text-white text-2xl font-semibold">McDonalds</p>
-                        </div>
-                        <div class="flex items-center space-x-2 w-5/12">
-                            <input class="w-8/12 rounded-md text-white bg-secondary px-3 py-2 outline-none text-sm text-gray" placeholder="Enter new name..." type="text">
-                            <button class="w-4/12 rounded text-white bg-main px-4 py-2 text-xs">Update</button>
-                        </div>
+                        <button [disabled]="securityForm.invalid" class="w-6/12 rounded bg-main text-white p-3 disabled:opacity-50 disabled:cursor-not-allowed">Update Password</button>
                     </div>
 
-                </div> -->
+                </form>
             </div>
 
         </div>
     </div>
+
 </section>

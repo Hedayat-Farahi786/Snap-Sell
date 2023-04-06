@@ -1,5 +1,7 @@
+import { AlertsService } from './../api/alerts.service';
+import { CategoriesService } from './../api/categories.service';
+import { ProductsService } from './../api/products.service';
 import { Component, OnInit } from '@angular/core';
-import { ProductsService } from '../api/products.service';
 import { DatePipe } from '@angular/common';
 const appVersion = require('../../../package.json').version;
 
@@ -25,7 +27,7 @@ export class HomeComponent implements OnInit {
   
   today: any = this.datePipe.transform(new Date(), 'EEEE, d MMMM yyyy');;
   
-  constructor(public productsService: ProductsService) {}
+  constructor(public productsService: ProductsService, public categoriesService: CategoriesService, public alertsService: AlertsService) {}
   
   ngOnInit(): void {
     window.addEventListener('scroll', ()=> {

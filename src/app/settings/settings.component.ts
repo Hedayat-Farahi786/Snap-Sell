@@ -1,5 +1,9 @@
+import { AlertsService } from './../api/alerts.service';
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../api/products.service';
+import { CategoriesService } from '../api/categories.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-settings',
@@ -8,17 +12,9 @@ import { ProductsService } from '../api/products.service';
 })
 export class SettingsComponent implements OnInit {
 
-
-  openTab = 1;
-  openSetting = 4;
-
-
-  products: any = [];
-
-
   settingsMenu = [
     {
-      icon: "M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z", 
+      icon: "M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z",
       title: 'My Store',
       info: 'Manage you data, logo, etc...'
     },
@@ -44,9 +40,45 @@ export class SettingsComponent implements OnInit {
     },
   ]
 
+  addCategoryForm!: FormGroup;
+  storeForm!: FormGroup;
+  securityForm!: FormGroup;
 
 
-  constructor(private productService: ProductsService) {
+  hrImagePreview = "../../assets/logos/logo_horizontal.png";
+  vtImagePreview = "../../assets/logos/logo_vertical.png";
+  logoImagePreview = "../../assets/logos/logo_icon.png";
+
+
+
+
+
+
+  openTab = 1;
+  openSetting = 4;
+
+  categories: any = [];
+
+  categoriesIcons: any = [];
+
+
+
+  selectedCategoryId: number = 0;
+
+  products: any = [];
+
+
+
+
+
+  constructor(private productService: ProductsService, public categoriesService: CategoriesService, public alertsService: AlertsService) {
+
+
+    this.categoriesIcons = this.categoriesService.categoriesIcons;
+
+    // Get all the categories from productService except for the first category which is "All"
+    this.categories = categoriesService.categories.filter((item: any, index: number) => index !== 0);
+
 
     let res: any = this.productService.products;
 
@@ -57,11 +89,118 @@ export class SettingsComponent implements OnInit {
       })
     }
 
-    console.log(this.products);
-
   }
 
   ngOnInit(): void {
+
+    this.addCategoryForm = new FormGroup({
+      icon: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required]),
+    });
+
+   
+
+    this.storeForm = new FormGroup({
+      name: new FormControl('McDonalds'),
+      currency: new FormControl('usd'),
+      color: new FormControl('#E06F2B'),
+      hrImage: new FormControl(null),
+      vtImage: new FormControl(null),
+      logoImage: new FormControl(null),
+    });
+
+
+    this.securityForm = new FormGroup({
+      currentPassword: new FormControl('', [Validators.required]),
+      newPassword: new FormControl('', [Validators.required]),
+      confirmNewPassword: new FormControl('', [Validators.required]),
+    });
+
+
+
+  }
+
+
+  currencyConverter(cur: string) {
+    switch (cur) {
+      case "usd":
+        return "USD $";
+      case "eur":
+        return "EURO €";
+      default:
+        return ""
+    }
+  }
+
+  updatePassword(){
+    console.log(this.securityForm.value);
+  }
+
+
+
+  onHrImageSelected(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onloadend = (e: any) => {
+        this.hrImagePreview = e.target['result'];
+      };
+    }
+  }
+
+  onVtImageSelected(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onloadend = (e: any) => {
+        this.vtImagePreview = e.target['result'];
+      };
+    }
+  }
+
+  onLogoImageSelected(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onloadend = (e: any) => {
+        this.logoImagePreview = e.target['result'];
+      };
+    }
+  }
+
+
+
+
+  submitStoreData() {
+    console.log(this.storeForm.value);
+  }
+
+
+  addNewCategory() {
+    let data = this.addCategoryForm.value;
+    data.iconId = this.categoriesService.categoriesIcons[this.selectedCategoryId].id;
+    this.categoriesService.addNewCategory(data);
+    this.addCategoryForm.reset();
+  }
+
+  editCategory(){
+    this.categoriesService.editCategory();
+  }
+
+  selectCategoryIcon(id: number) {
+    this.selectedCategoryId = id;
+    this.addCategoryForm.get('icon')?.setValue(this.categoriesIcons[id].icon);
+    this.categoriesService.selectCategoryIcon(id);
+    this.categoriesService.categoriesPlaceholderImage = this.categoriesIcons[id].icon;
+  }
+  editCategoryIcon(id: number) {
+    this.selectedCategoryId = id;
+    this.categoriesService.editCategoryForm.get('icon')?.setValue(this.categoriesIcons[id].icon);
+    this.categoriesService.selectCategoryIcon(id);
+    this.categoriesService.categoriesPlaceholderImage = this.categoriesIcons[id].icon;
   }
 
   toggleTabs($tabNumber: number) {
@@ -70,4 +209,9 @@ export class SettingsComponent implements OnInit {
   toggleSettings($tabNumber: number) {
     this.openSetting = $tabNumber;
   }
+
+
+
+
+
 }

@@ -1,3 +1,4 @@
+import { CategoriesService } from './../api/categories.service';
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../api/products.service';
 
@@ -9,32 +10,7 @@ import { ProductsService } from '../api/products.service';
 export class ProductsComponent implements OnInit {
 
 
-
-
-  menus = [
-    {
-      icon: '../../assets/icons/products/icons8-list-view-100.png',
-      name: 'All',
-      active: true
-    },
-    {
-      icon: '../../assets/icons/products/icons8-steak-100.png',
-      name: 'Steaks'
-    },
-    {
-      icon: '../../assets/icons/products/icons8-takeaway-hot-drink-100.png',
-      name: 'Coffee'
-    },
-    {
-      icon: '../../assets/icons/products/icons8-ice-cream-cone-100.png',
-      name: 'Ice Cream'
-    },
-    {
-      icon: '../../assets/icons/products/icons8-cake-100.png',
-      name: 'Desserts'
-    },
-  ]
-
+  categories: any = [];
   allProducts: any = []
   products: any;
   totalProducts: number = 0;
@@ -42,7 +18,8 @@ export class ProductsComponent implements OnInit {
   selectedMenu: string = "All";
 
  
-  constructor(public productsService: ProductsService) {
+  constructor(public productsService: ProductsService, public categoriesService: CategoriesService) {
+    this.categories = categoriesService.categories;
     this.totalProducts = 0;
     this.products = productsService.products;
     for (let key in this.products) {

@@ -3,7 +3,7 @@
   <div class="menu__items flex space-x-5">
     <div
     [style]="{background: selectedMenu === menu.name ? '#e0702b4c' : '', borderColor: selectedMenu === menu.name ? '#E06F2B' : 'gray'}" (click)="selectMenu(menu.name)"
-     *ngFor="let menu of menus"  class="menu__item w-28 cursor-pointer flex flex-col items-center content-center text-white border-2 px-3 py-5 space-y-2 rounded-lg"
+     *ngFor="let menu of categories"  class="menu__item w-28 cursor-pointer flex flex-col items-center content-center text-white border-2 px-3 py-5 space-y-2 rounded-lg"
     >
       <img
         class="w-10"

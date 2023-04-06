@@ -6,6 +6,9 @@ import { Injectable } from '@angular/core';
 export class ProductsService {
 
 
+
+  
+
   products = {
     "Steaks": [],
     "Coffee": [
@@ -35,7 +38,7 @@ export class ProductsService {
       },
       {
         id: 2,
-  
+
         image: '../../assets/coffee/3.jpg',
         name: 'Capacino Coffee',
         info: 'Coffee capacino passion 2 shot caramel sauce',
@@ -53,15 +56,14 @@ export class ProductsService {
       },
       {
         id: 3,
-  
+
         image: '../../assets/coffee/4.jpg',
         name: 'Latino Coffee',
         info: 'Coffee Latino passion 2 shot caramel sauce',
         price: 3.20,
       },
       {
-        id: 4,
-  
+        icon: 4,
         image: '../../assets/coffee/5.jpg',
         name: 'Simple Coffee',
         info: 'Coffee Simple passion 2 shot caramel sauce',
@@ -79,16 +81,16 @@ export class ProductsService {
   billProducts: any = [];
 
 
-  constructor() {}
+  constructor() { }
 
 
-  addToBillProducts(product: any){
+  addToBillProducts(product: any) {
     this.billProducts.push(product);
   }
 
-
-  toggleShowBill(){
+  toggleShowBill() {
     this.showBill = !this.showBill;
   }
+
 
 }
