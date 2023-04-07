@@ -20,8 +20,8 @@ export class ProductsComponent implements OnInit {
  
   constructor(public productsService: ProductsService, public categoriesService: CategoriesService) {
     this.categories = categoriesService.categories;
-    this.totalProducts = 0;
     this.products = productsService.products;
+    this.totalProducts = 0;
     for (let key in this.products) {
       this.totalProducts += this.products[key].length;
       this.allProducts.push({
@@ -30,14 +30,13 @@ export class ProductsComponent implements OnInit {
       })
     }
   }
-
+  
   ngOnInit(): void {
   }
 
 
   selectMenu(menuName: string){
     this.selectedMenu = menuName;
-    
   }
 
   addToBill(product: any){

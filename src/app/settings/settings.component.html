@@ -357,6 +357,232 @@
             </div>
 
             <div class="mt-10" *ngIf="openSetting === 3">
+                <div *ngIf="productService.showAddProduct"
+                    class="absolute top-0 right-0 left-0 bottom-0 transition-all duration-200 ease-in-out bg-secondary rounded-lg z-10 flex justify-center">
+
+                    <div
+                        class="bg-light rounded-lg p-5 h-max w-full">
+                        <div class="flex items-center justify-between text-main">
+                            <div class="text-white text-xl font-semibold flex items-center space-x-2"><span
+                                    (click)="productService.toggleShowAddProduct()"
+                                    class="hover:text-main cursor-pointer transition-all duration-200 ease-in-out">Products</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-main">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+
+                                <span>Add new product</span>
+                            </div>
+                            <svg (click)="productService.toggleShowAddProduct()" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="w-6 h-6 cursor-pointer">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </div>
+                        <div class="w-full h-[1px] bg-gray mt-5 mb-10"></div>
+                        <form [formGroup]="productService.addProductForm" (submit)="productService.addNewProduct()" class="flex flex-col items-center justify-center space-y-5 mb-10">
+                            <!-- <img class="w-36" [src]="productService.categoriesPlaceholderImage" /> -->
+                            
+                            
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Product Category:</p>
+                                <select formControlName="category"
+                                    class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                                    >
+                                <option disabled selected>Choose a category</option>
+                                <option *ngFor="let category of categoriesService.categories" [value]="category.name">{{category.name}}</option>
+                                </select>
+
+                                <div
+                                    *ngIf="productService.addProductForm.get('category')?.invalid && (productService.addProductForm.get('category')?.dirty || productService.addProductForm.get('category')?.touched)">
+                                    <p *ngIf="productService.addProductForm.get('category')?.errors?.['required']"
+                                        class="text-xs text-main">Product category is required!</p>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Product Image:</p>
+                                <input formControlName="image"
+                                    class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                                     type="file">
+
+                                <div
+                                    *ngIf="productService.addProductForm.get('image')?.invalid && (productService.addProductForm.get('image')?.dirty || productService.addProductForm.get('image')?.touched)">
+                                    <p *ngIf="productService.addProductForm.get('image')?.errors?.['required']"
+                                        class="text-xs text-main">Product image is required!</p>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Product Name:</p>
+                                <input formControlName="name"
+                                    class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                                    placeholder="Product name..." type="text">
+
+                                <div
+                                    *ngIf="productService.addProductForm.get('name')?.invalid && (productService.addProductForm.get('name')?.dirty || productService.addProductForm.get('name')?.touched)">
+                                    <p *ngIf="productService.addProductForm.get('name')?.errors?.['required']"
+                                        class="text-xs text-main">Product name is required!</p>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Product Info:</p>
+
+                                <textarea formControlName="info" class="w-full resize-none rounded-md text-white bg-secondary px-4 py-4 outline-none text-xs" placeholder="Product Info..." cols="30" rows="5"></textarea>
+
+                                <div
+                                    *ngIf="productService.addProductForm.get('info')?.invalid && (productService.addProductForm.get('info')?.dirty || productService.addProductForm.get('info')?.touched)">
+                                    <p *ngIf="productService.addProductForm.get('info')?.errors?.['required']"
+                                        class="text-xs text-main">Product info is required!</p>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Product Price:</p>
+                                <input formControlName="price"
+                                    class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                                    placeholder="Product price..." type="number">
+
+                                <div
+                                    *ngIf="productService.addProductForm.get('price')?.invalid && (productService.addProductForm.get('price')?.dirty || productService.addProductForm.get('price')?.touched)">
+                                    <p *ngIf="productService.addProductForm.get('price')?.errors?.['required']"
+                                        class="text-xs text-main">Product price is required!</p>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                            <div class="flex items-center justify-center w-8/12">
+                                <button type="submit" [disabled]="productService.addProductForm.invalid"
+                                    class="w-6/12 rounded bg-main text-white p-3 font-semibold disabled:opacity-50 disabled:cursor-not-allowed">Add
+                                    Product</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+
+                <div *ngIf="productService.showEditProduct"
+                    class="absolute top-0 right-0 left-0 bottom-0 transition-all duration-200 ease-in-out bg-secondary rounded-lg z-10 flex justify-center">
+
+                    <div
+                        class="bg-light rounded-lg p-5 h-max w-full">
+                        <div class="flex items-center justify-between text-main">
+                            <div class="text-white text-xl font-semibold flex items-center space-x-2"><span
+                                    (click)="productService.toggleShowEditProduct()"
+                                    class="hover:text-main cursor-pointer transition-all duration-200 ease-in-out">Products</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-main">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                </svg>
+
+                                <span>Edit product</span>
+                            </div>
+                            <svg (click)="productService.toggleShowEditProduct()" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="w-6 h-6 cursor-pointer">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </div>
+                        <div class="w-full h-[1px] bg-gray mt-5 mb-10"></div>
+                        <form [formGroup]="productService.editProductForm" (submit)="productService.editProduct()" class="flex flex-col items-center justify-center space-y-5 mb-10">
+                            <!-- <img class="w-36" [src]="productService.categoriesPlaceholderImage" /> -->
+                            
+                            
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Product Category:</p>
+                                <select formControlName="category"
+                                    class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                                    >
+                                <option disabled selected>Choose a category</option>
+                                <option *ngFor="let category of categoriesService.categories" [value]="category.name">{{category.name}}</option>
+                                </select>
+
+                                <!-- <div
+                                    *ngIf="productService.editProductForm.get('category')?.invalid && (productService.editProductForm.get('category')?.dirty || productService.editProductForm.get('category')?.touched)">
+                                    <p *ngIf="productService.editProductForm.get('category')?.errors?.['required']"
+                                        class="text-xs text-main">Product category is required!</p>
+                                </div> -->
+                            </div>
+
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Product Image:</p>
+                                <input formControlName="image"
+                                    class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                                     type="file">
+<!-- 
+                                <div
+                                    *ngIf="productService.editProductForm.get('image')?.invalid && (productService.editProductForm.get('image')?.dirty || productService.editProductForm.get('image')?.touched)">
+                                    <p *ngIf="productService.editProductForm.get('image')?.errors?.['required']"
+                                        class="text-xs text-main">Product image is required!</p>
+                                </div> -->
+                            </div>
+
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Product Name:</p>
+                                <input formControlName="name"
+                                    class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                                    placeholder="Product name..." type="text">
+
+                                <!-- <div
+                                    *ngIf="productService.editProductForm.get('name')?.invalid && (productService.editProductForm.get('name')?.dirty || productService.editProductForm.get('name')?.touched)">
+                                    <p *ngIf="productService.editProductForm.get('name')?.errors?.['required']"
+                                        class="text-xs text-main">Product name is required!</p>
+                                </div> -->
+                            </div>
+
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Product Info:</p>
+
+                                <textarea formControlName="info" class="w-full resize-none rounded-md text-white bg-secondary px-4 py-4 outline-none text-xs" placeholder="Product Info..." cols="30" rows="5"></textarea>
+
+                                <!-- <div
+                                    *ngIf="productService.editProductForm.get('info')?.invalid && (productService.editProductForm.get('info')?.dirty || productService.editProductForm.get('info')?.touched)">
+                                    <p *ngIf="productService.editProductForm.get('info')?.errors?.['required']"
+                                        class="text-xs text-main">Product info is required!</p>
+                                </div> -->
+                            </div>
+
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Product Price:</p>
+                                <input formControlName="price"
+                                    class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                                    placeholder="Product price..." type="number">
+
+                                <!-- <div
+                                    *ngIf="productService.editProductForm.get('price')?.invalid && (productService.editProductForm.get('price')?.dirty || productService.editProductForm.get('price')?.touched)">
+                                    <p *ngIf="productService.editProductForm.get('price')?.errors?.['required']"
+                                        class="text-xs text-main">Product price is required!</p>
+                                </div> -->
+                            </div>
+
+
+
+
+
+
+                            <div class="flex items-center justify-center w-8/12">
+                                <button type="submit"
+                                    class="w-6/12 rounded bg-main text-white p-3 font-semibold disabled:opacity-50 disabled:cursor-not-allowed">Update
+                                    Product</button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+
+
+
                 <ul class="text-white w-full flex text-sm">
                     <li *ngFor="let item of products; index as i" (click)="toggleTabs(i+1)"
                         [ngClass]="{'text-main font-semibold border-main': openTab === (i+1), 'flex-1': i === (products.length - 1)}"
@@ -369,6 +595,7 @@
                         <div class="tab-content tab-space">
                             <div class="flex flex-wrap">
                                 <div
+                                    (click)="productService.toggleShowAddProduct()"
                                     class="product_card cursor-pointer mr-5 mb-5 min-h-[250px] text-main flex flex-col items-center justify-center space-y-5 w-max border-dashed border rounded px-5">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -377,7 +604,7 @@
                                     </svg>
                                     <p>Add new product</p>
                                 </div>
-                                <div *ngFor="let product of products[openTab - 1].items"
+                                <div *ngFor="let product of productService.settingProducts[openTab - 1].items"
                                     class="product_card pt-5 mr-5 mb-5 text-main flex flex-col space-y-5 items-center justify-between border-[#6D6D6D] border rounded">
                                     <img [src]="product.image" class="rounded-full w-[100px] h-[100px] object-cover"
                                         alt="">
@@ -385,14 +612,31 @@
                                     <div class="text-center text-xs text-gray">
                                         <p>${{product.price}} <span class="text-white">*</span> 20 Bowls</p>
                                     </div>
-                                    <div
-                                        class="bg-[#E06F2B3c] cursor-pointer w-full flex items-center justify-center space-x-2 text-xs p-4">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                        </svg>
-                                        <p class="font-semibold">Edit Product</p>
+                                    <div class="w-full flex">
+
+                                        <div
+                                            (click)="productService.openEditProduct(products[openTab - 1].menuName ,product.id)"
+                                            class="bg-[#E06F2B3c] hover:text-white cursor-pointer w-full flex items-center justify-center space-x-2 text-xs p-4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                            </svg>
+                                            <p class="font-semibold">Edit</p>
+                                        </div>
+                                        <div class="w-[1px] h-full bg-[#6D6D6D]"></div>
+                                        <div
+                                        (click)="productService.deleteProduct(products[openTab - 1].menuName ,product.id)"
+                                            class="bg-[#C628283c] hover:text-white text-[#C62828] cursor-pointer w-full flex items-center justify-center space-x-2 text-xs p-4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                            </svg>
+
+                                            <p class="font-semibold">Delete</p>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

@@ -55,7 +55,7 @@ export class SettingsComponent implements OnInit {
 
 
   openTab = 1;
-  openSetting = 4;
+  openSetting = 3;
 
   categories: any = [];
 
@@ -71,7 +71,7 @@ export class SettingsComponent implements OnInit {
 
 
 
-  constructor(private productService: ProductsService, public categoriesService: CategoriesService, public alertsService: AlertsService) {
+  constructor(public productService: ProductsService, public categoriesService: CategoriesService, public alertsService: AlertsService) {
 
 
     this.categoriesIcons = this.categoriesService.categoriesIcons;
