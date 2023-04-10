@@ -2,6 +2,8 @@ import { AnyARecord } from 'dns';
 import { AlertsService } from './alerts.service';
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -242,11 +244,21 @@ export class CategoriesService {
   categoriesPlaceholderImage: string =
     '../../assets/icons/products/icons8-image-100.png';
 
-  constructor(private alertsService: AlertsService) {
+  constructor(private alertsService: AlertsService, private http: HttpClient) {
     this.editCategoryForm = new FormGroup({
       icon: new FormControl(''),
       name: new FormControl(''),
+      description: new FormControl('')
     });
+  }
+
+
+  getAllCategories(){
+    return this.http.get(environment.backendUrl + "categories");
+  }
+
+  deleteCategoryById(id: string){
+    return this.http.delete(environment.backendUrl + "categories/" + id);
   }
 
   toggleShowAddCategory() {
@@ -260,59 +272,39 @@ export class CategoriesService {
     this.showEditCategory = !this.showEditCategory;
   }
 
+
+  addNewCategory(data: any) {
+    this.http.post(environment.backendUrl + "categories", data).subscribe(
+      (res: any) => {
+        this.alertsService.displaySuccessAlert("Success", `Category ${data.name} created sucessfully`);
+        this.toggleShowAddCategory();
+      }, (err: any) => {
+        this.alertsService.displayErrorAlert("Error", err.message);
+      }
+    );
+  }
+
   openEditCategory(category: any) {
     this.editCategoryForm.get('name')?.setValue(category.name);
     this.editCategoryForm.get('icon')?.setValue(category.icon);
+    this.editCategoryForm.get('description')?.setValue(category.description);
     this.categoriesPlaceholderImage = category.icon;
     this.selectCategoryIcon(category.iconId);
     this.showEditCategory = !this.showEditCategory;
     this.categoryToEdit = category;
   }
 
-  addNewCategory(data: any) {
-    let match = false;
-
-    this.categories.forEach((cat: any) => {
-      if (cat.name.toLowerCase() === data.name.toLowerCase()) {
-        match = true;
-      }
-    });
-
-    if (!match) {
-      data.id = this.categories.length;
-      data.products = [];
-      this.categories.push(data);
-      this.alertsService.displaySuccessAlert(
-        'Success',
-        `${data.name} category successfully added!`
-      );
-      
-      this.toggleShowAddCategory();
-    } else {
-      this.alertsService.displayErrorAlert(
-        'Error',
-        'Category with this name already exists!'
-      );
-    }
-  }
-
   editCategory() {
-    this.categories.forEach((cat: any, i: number) => {
-      if (cat.id === this.categoryToEdit.id) {
-        let newData = this.editCategoryForm.value;
-
-        newData.id = cat.id;
-        newData.iconId = this.selectedCategoryIcon;
-
-        this.categories[i] = newData;
+    let id = this.categoryToEdit._id;
+    this.http.patch(environment.backendUrl + "categories/" + id, this.editCategoryForm.value).subscribe(
+      (res: any) => {
+        this.alertsService.displaySuccessAlert("Success", `Category updated sucessfully`);
+        this.toggleEditCategory();
+        this.editCategoryForm.reset();
+      }, (err: any) => {
+        this.alertsService.displayErrorAlert("Error", err.message);
       }
-    });
-
-    this.alertsService.displaySuccessAlert(
-      'Success',
-      `Category successfully edited!`
     );
-    this.toggleEditCategory();
   }
 
   deleteCategory(category: any) {

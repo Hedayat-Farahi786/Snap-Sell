@@ -235,6 +235,13 @@
 
 
                             </div>
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Description:</p>
+                                <input formControlName="description"
+                                    class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                                    placeholder="Category description..." type="text">
+
+                            </div>
 
                             <div class="flex items-center justify-center w-8/12">
                                 <button type="submit" [disabled]="addCategoryForm.invalid"
@@ -295,6 +302,13 @@
                                 </div>
                             </div>
 
+                            <div class="flex flex-col space-y-2 w-8/12">
+                                <p class="text-xs text-gray">Description:</p>
+                                <input formControlName="description" [placeholder]="categoriesService.editCategoryName"
+                                    class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
+                                    placeholder="Category description..." type="text">
+                            </div>
+
                             <div class="flex items-center justify-center w-8/12">
                                 <button type="submit"
                                     class="w-6/12 rounded bg-main text-white p-3 font-semibold">Edit
@@ -319,7 +333,7 @@
                                     </svg>
                                     <p>Add new Category</p>
                                 </div>
-                                <div *ngFor="let category of categoriesService.categories | slice:1"
+                                <div *ngFor="let category of categories"
                                     class="product_card transition-all duration-200 linear hover:bg-[#E06F2B3c] cursor-pointer pt-5 mr-5 mb-5 text-main flex flex-col items-center justify-between border-[#6D6D6D] border rounded">
                                     <div class="flex flex-col items-center space-y-5">
                                         <img class="w-36" [src]="category.icon" />
@@ -337,7 +351,7 @@
                                             <p class="font-semibold">Edit</p>
                                         </div>
                                         <div class="w-[1px] h-full bg-[#6D6D6D]"></div>
-                                        <div (click)="categoriesService.deleteCategory(category)"
+                                        <div (click)="deleteCategory(category)"
                                             class="bg-[#C628283c] hover:text-white text-[#C62828] cursor-pointer w-full flex items-center justify-center space-x-2 text-xs p-4">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -391,7 +405,7 @@
                                     class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
                                     >
                                 <option disabled selected>Choose a category</option>
-                                <option *ngFor="let category of categoriesService.categories" [value]="category.name">{{category.name}}</option>
+                                <option *ngFor="let category of categories" [value]="category._id">{{category.name}}</option>
                                 </select>
 
                                 <div
@@ -405,7 +419,7 @@
                                 <p class="text-xs text-gray">Product Image:</p>
                                 <input formControlName="image"
                                     class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
-                                     type="file">
+                                     type="file" (change)="productService.onAddProductImageSelect($event)">
 
                                 <div
                                     *ngIf="productService.addProductForm.get('image')?.invalid && (productService.addProductForm.get('image')?.dirty || productService.addProductForm.get('image')?.touched)">
@@ -503,7 +517,7 @@
                                     class="w-full rounded-md text-white bg-secondary px-4 py-4 outline-none text-sm"
                                     >
                                 <option disabled selected>Choose a category</option>
-                                <option *ngFor="let category of categoriesService.categories" [value]="category.name">{{category.name}}</option>
+                                <option *ngFor="let category of categories" [value]="category._id">{{category.name}}</option>
                                 </select>
 
                                 <!-- <div
@@ -584,10 +598,10 @@
 
 
                 <ul class="text-white w-full flex text-sm">
-                    <li *ngFor="let item of products; index as i" (click)="toggleTabs(i+1)"
-                        [ngClass]="{'text-main font-semibold border-main': openTab === (i+1), 'flex-1': i === (products.length - 1)}"
+                    <li *ngFor="let item of categories; index as i" (click)="toggleTabs(i)"
+                        [ngClass]="{'text-main font-semibold border-main': openTab === (i), 'flex-1': i === (categories.length - 1)}"
                         class="transition-all duration-200 ease-in-out cursor-pointer px-5 border-b border-gray pb-2">
-                        {{item.menuName}}</li>
+                        {{item.name}}</li>
 
                 </ul>
                 <div class="relative flex flex-col min-w-0 break-words w-full mb-10 mt-5">
@@ -604,7 +618,7 @@
                                     </svg>
                                     <p>Add new product</p>
                                 </div>
-                                <div *ngFor="let product of productService.settingProducts[openTab - 1].items"
+                                <div *ngFor="let product of displayProducts"
                                     class="product_card pt-5 mr-5 mb-5 text-main flex flex-col space-y-5 items-center justify-between border-[#6D6D6D] border rounded">
                                     <img [src]="product.image" class="rounded-full w-[100px] h-[100px] object-cover"
                                         alt="">
@@ -615,7 +629,7 @@
                                     <div class="w-full flex">
 
                                         <div
-                                            (click)="productService.openEditProduct(products[openTab - 1].menuName ,product.id)"
+                                            (click)="productService.openEditProduct(product)"
                                             class="bg-[#E06F2B3c] hover:text-white cursor-pointer w-full flex items-center justify-center space-x-2 text-xs p-4">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -626,7 +640,7 @@
                                         </div>
                                         <div class="w-[1px] h-full bg-[#6D6D6D]"></div>
                                         <div
-                                        (click)="productService.deleteProduct(products[openTab - 1].menuName ,product.id)"
+                                        (click)="productService.deleteProduct(product)"
                                             class="bg-[#C628283c] hover:text-white text-[#C62828] cursor-pointer w-full flex items-center justify-center space-x-2 text-xs p-4">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
