@@ -1,65 +1,35 @@
 <section class="login bg-secondary w-full h-screen flex flex-col items-center">
-  <div
-    class="logo w-full flex items-center justify-center mb-5 md:mb-0 py-8 relative"
-  >
+  <div class="logo w-full flex items-center justify-center mb-5 md:mb-0 py-8 relative">
     <img class="w-36" src="../../assets/logos/logo_vertical.png" alt="logo" />
     <div class="absolute text-white right-10 top-5">
       <div>
-        <button
-          (click)="selectLanguage()"
-          class="hover:bg-light text-xs px-8 py-2 rounded-md inline-flex items-center"
-        >
-          <svg
-            aria-hidden="true"
-            class="h-4 w-4 rounded-full mr-2"
-            xmlns="http://www.w3.org/2000/svg"
-            id="flag-icon-css-us"
-            viewBox="0 0 512 512"
-          >
+        <button (click)="selectLanguage()" class="hover:bg-light text-xs px-8 py-2 rounded-md inline-flex items-center">
+          <svg aria-hidden="true" class="h-4 w-4 rounded-full mr-2" xmlns="http://www.w3.org/2000/svg"
+            id="flag-icon-css-us" viewBox="0 0 512 512">
             <g fill-rule="evenodd">
               <g stroke-width="1pt">
-                <path
-                  fill="#bd3d44"
+                <path fill="#bd3d44"
                   d="M0 0h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z"
-                  transform="scale(3.9385)"
-                />
-                <path
-                  fill="#fff"
+                  transform="scale(3.9385)" />
+                <path fill="#fff"
                   d="M0 10h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0zm0 20h247v10H0z"
-                  transform="scale(3.9385)"
-                />
+                  transform="scale(3.9385)" />
               </g>
-              <path
-                fill="#192f5d"
-                d="M0 0h98.8v70H0z"
-                transform="scale(3.9385)"
-              />
-              <path
-                fill="#fff"
+              <path fill="#192f5d" d="M0 0h98.8v70H0z" transform="scale(3.9385)" />
+              <path fill="#fff"
                 d="M8.2 3l1 2.8H12L9.7 7.5l.9 2.7-2.4-1.7L6 10.2l.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7L74 8.5l-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 7.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 24.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 21.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 38.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 35.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 52.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 49.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm-74.1 7l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7H65zm16.4 0l1 2.8H86l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm-74 7l.8 2.8h3l-2.4 1.7.9 2.7-2.4-1.7L6 66.2l.9-2.7-2.4-1.7h3zm16.4 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8H45l-2.4 1.7 1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9zm16.4 0l1 2.8h2.8l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h3zm16.5 0l.9 2.8h2.9l-2.3 1.7.9 2.7-2.4-1.7-2.3 1.7.9-2.7-2.4-1.7h2.9zm16.5 0l.9 2.8h2.9L92 63.5l1 2.7-2.4-1.7-2.4 1.7 1-2.7-2.4-1.7h2.9z"
-                transform="scale(3.9385)"
-              />
+                transform="scale(3.9385)" />
             </g>
           </svg>
           English (US)
         </button>
-        <div
-          [style]="{ display: showLanguages ? 'block' : 'none' }"
-          class="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md mt-2 transition duration-500 ease-in-out"
-        >
+        <div [style]="{ display: showLanguages ? 'block' : 'none' }"
+          class="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md mt-2 transition duration-500 ease-in-out">
           <ul class="py-2 space-y-2 font-medium text-xs" role="none">
-            <li
-              (click)="selectLanguage()"
-              class="w-full hover:bg-light cursor-pointer px-4 py-2"
-            >
+            <li (click)="selectLanguage()" class="w-full hover:bg-light cursor-pointer px-4 py-2">
               <div class="inline-flex items-center">
-                <svg
-                  class="h-4 w-4 rounded-full mr-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  id="flag-icon-css-de"
-                  viewBox="0 0 512 512"
-                >
+                <svg class="h-4 w-4 rounded-full mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                  id="flag-icon-css-de" viewBox="0 0 512 512">
                   <path fill="#ffce00" d="M0 341.3h512V512H0z" />
                   <path d="M0 0h512v170.7H0z" />
                   <path fill="#d00" d="M0 170.7h512v170.6H0z" />
@@ -73,28 +43,31 @@
     </div>
   </div>
   <div class="main text-white w-full flex items-center justify-center">
-    <div
-      class="login__card bg-light w-11/12 md:w-2/6 space-y-8 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md p-10"
-    >
+    <form [formGroup]="loginForm" (submit)="login()"
+      class="login__card bg-light w-11/12 md:w-2/6 space-y-8 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md p-10">
       <h1 class="font-bold text-xl text-center">Login to your account</h1>
       <div class="flex flex-col space-y-4">
         <div class="inputs flex flex-col space-y-4">
           <div class="email__input flex flex-col w-full space-y-2">
             <label class="text-sm font-normal" for="email">Email</label>
-            <input
-              class="w-full text-secondary rounded-md border-gray border outline-none bg-[#e0e0e0] px-4 py-2"
-              type="email"
-              placeholder="john@example.com"
-            />
+            <input class="w-full text-secondary rounded-md border-gray border outline-none bg-[#e0e0e0] px-4 py-2"
+              type="email" formControlName="email" placeholder="john@example.com" />
+            <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+              <p *ngIf="email?.errors?.['email']" class="text-xs text-main">Incorrect email format!</p>
+              <p *ngIf="email?.errors?.['required']" class="text-xs text-main">Email is required!</p>
+              <p *ngIf="email?.errors?.['notFound']" class="text-xs text-main">User not found!</p>
+            </div>
             <!-- <span class="text-xs text-red font-semibold">Email is required</span> -->
           </div>
           <div class="password__input flex flex-col w-full space-y-2">
             <label class="text-sm font-normal" for="password">Password</label>
-            <input
-              class="w-full text-secondary rounded-md border-gray border outline-none bg-[#e0e0e0] px-4 py-2"
-              type="password"
-              placeholder="******"
-            />
+            <input class="w-full text-secondary rounded-md border-gray border outline-none bg-[#e0e0e0] px-4 py-2"
+              type="password" formControlName="password" placeholder="******" />
+            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+              <p *ngIf="password?.errors?.['required']" class="text-xs text-main">Password is required!</p>
+              <p *ngIf="password?.errors?.['minlength']" class="text-xs text-main">Password must be at least 6 characters!</p>
+              <p *ngIf="password?.errors?.['incorrect']" class="text-xs text-main">Password is not correct!</p>
+            </div>
             <!-- <span class="text-xs text-red font-semibold">Password is required</span> -->
           </div>
         </div>
@@ -103,28 +76,22 @@
             <input class="cursor-pointer" type="checkbox" />
             <p>Remember Me</p>
           </div>
-          <div
-            class="forgotPassword text-xs cursor-pointer hover:underline transition-all duration-200 ease-linear"
-          >
+          <div class="forgotPassword text-xs cursor-pointer hover:underline transition-all duration-200 ease-linear">
             <p>Forgot Password?</p>
           </div>
         </div>
       </div>
       <div class="login__button">
-        <button routerLink="/home" class="w-full rounded-md bg-main text-white font-bold p-2">
+        <button type="submit" [disabled]="loginForm.invalid" class="w-full rounded-md bg-main text-white font-bold p-2 disabled:opacity-50 disabled:cursor-not-allowed">
           Login
         </button>
       </div>
       <div class="login__reminder text-xs">
         <p>
           Don't have an account yet?
-          <span
-            routerLink="/signup"
-            class="text-main font-semibold cursor-pointer hover:underline"
-            >Sign Up</span
-          >
+          <span routerLink="/signup" class="text-main font-semibold cursor-pointer hover:underline">Sign Up</span>
         </p>
       </div>
-    </div>
+    </form>
   </div>
 </section>

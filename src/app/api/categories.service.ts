@@ -274,14 +274,7 @@ export class CategoriesService {
 
 
   addNewCategory(data: any) {
-    this.http.post(environment.backendUrl + "categories", data).subscribe(
-      (res: any) => {
-        this.alertsService.displaySuccessAlert("Success", `Category ${data.name} created sucessfully`);
-        this.toggleShowAddCategory();
-      }, (err: any) => {
-        this.alertsService.displayErrorAlert("Error", err.message);
-      }
-    );
+    return this.http.post(environment.backendUrl + "categories", data);
   }
 
   openEditCategory(category: any) {
@@ -296,15 +289,7 @@ export class CategoriesService {
 
   editCategory() {
     let id = this.categoryToEdit._id;
-    this.http.patch(environment.backendUrl + "categories/" + id, this.editCategoryForm.value).subscribe(
-      (res: any) => {
-        this.alertsService.displaySuccessAlert("Success", `Category updated sucessfully`);
-        this.toggleEditCategory();
-        this.editCategoryForm.reset();
-      }, (err: any) => {
-        this.alertsService.displayErrorAlert("Error", err.message);
-      }
-    );
+    return this.http.patch(environment.backendUrl + "categories/" + id, this.editCategoryForm.value);
   }
 
   deleteCategory(category: any) {

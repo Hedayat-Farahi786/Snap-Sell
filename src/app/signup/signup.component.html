@@ -71,8 +71,8 @@
     </div>
   </div>
   <div class="main w-full text-white flex items-center justify-center">
-    <div
-      class="login__card bg-light w-11/12 md:w-3/6 space-y-6 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md px-10 py-5"
+    <form [formGroup]="signupForm" (submit)="signup()"
+      class="login__card bg-light w-11/12 md:w-2/6 space-y-6 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md px-10 py-5"
     >
       <h1 class="font-bold text-xl text-center mb-2">Sign up a new account</h1>
       <div
@@ -85,8 +85,28 @@
               class="w-full bg-[#e0e0e0] text-secondary rounded-md border-gray text-sm border outline-none px-4 py-2"
               type="email"
               placeholder="john@example.com"
+              formControlName="email"
             />
+            <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+              <p *ngIf="email?.errors?.['email']" class="text-xs text-main">Incorrect email format!</p>
+              <p *ngIf="email?.errors?.['required']" class="text-xs text-main">Email is required!</p>
+            </div>
             <!-- <span class="text-xs text-red font-semibold">Email is required</span> -->
+          </div>
+          <div class="email__input flex flex-col w-full space-y-2">
+            <label class="text-sm font-normal" for="email"
+              >Business Name</label
+            >
+            <input
+              class="w-full bg-[#e0e0e0] text-secondary rounded-md border-gray text-sm border outline-none px-4 py-2"
+              type="email"
+              placeholder="McDonalds"
+              formControlName="storeName"
+            />
+            <div *ngIf="storeName?.invalid && (storeName?.dirty || storeName?.touched)">
+              <p *ngIf="storeName?.errors?.['required']" class="text-xs text-main">Business name is required!</p>
+            </div>
+            <!-- <span class="text-xs text-red font-semibold">Business Name is required</span> -->
           </div>
           <div class="password__input flex flex-col w-full space-y-2">
             <label class="text-sm font-normal" for="password">Password</label>
@@ -94,7 +114,12 @@
               class="w-full bg-[#e0e0e0] text-secondary rounded-md border-gray text-sm border outline-none px-4 py-2"
               type="password"
               placeholder="******"
+              formControlName="password"
             />
+            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+              <p *ngIf="password?.errors?.['required']" class="text-xs text-main">Passowrd is required!</p>
+              <p *ngIf="password?.errors?.['minlength']" class="text-xs text-main">Password must be at least 6 characters!</p>
+            </div>
             <!-- <span class="text-xs text-red font-semibold">Password is required</span> -->
           </div>
           <div class="password__input flex flex-col w-full space-y-2">
@@ -105,55 +130,30 @@
               class="w-full bg-[#e0e0e0] text-secondary rounded-md border-gray text-sm border outline-none px-4 py-2"
               type="password"
               placeholder="******"
+              formControlName="confirmPassword"
             />
+            <div *ngIf="confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)">
+              <p *ngIf="confirmPassword?.errors?.['required']" class="text-xs text-main">Confirm Password is required!</p>
+              <p *ngIf="confirmPassword?.errors?.['missMatch']" class="text-xs text-main">Confirm password did not match the password!</p>
+            </div>
             <!-- <span class="text-xs text-red font-semibold">Confirm Password is required</span> -->
-          </div>
-        </div>
-        <div class="inputs__right w-full flex flex-col space-y-4">
-          <div class="email__input flex flex-col w-full space-y-2">
-            <label class="text-sm font-normal" for="email"
-              >Business Name</label
-            >
-            <input
-              class="w-full bg-[#e0e0e0] text-secondary rounded-md border-gray text-sm border outline-none px-4 py-2"
-              type="email"
-              placeholder="McDonalds"
-            />
-            <!-- <span class="text-xs text-red font-semibold">Business Name is required</span> -->
-          </div>
-          <div class="password__input flex flex-col w-full space-y-2">
-            <label class="text-sm font-normal" for="password">Address</label>
-            <input
-              class="w-full bg-[#e0e0e0] text-secondary rounded-md border-gray text-sm border outline-none px-4 py-2"
-              type="password"
-              placeholder="examplestrße 123, 80123 München"
-            />
-            <!-- <span class="text-xs text-red font-semibold">Address is required</span> -->
-          </div>
-          <div class="password__input flex flex-col w-full space-y-2">
-            <label class="text-sm font-normal" for="password"
-              >Contant Number</label
-            >
-            <input
-              class="w-full bg-[#e0e0e0] text-secondary rounded-md border-gray text-sm border outline-none px-4 py-2"
-              type="password"
-              placeholder="015134567"
-            />
-            <!-- <span class="text-xs text-red font-semibold">Contant Number is required</span> -->
           </div>
         </div>
       </div>
 
       <div class="rememberMe text-xs flex items-center space-x-2">
-        <input class="cursor-pointer" type="checkbox" />
+        <input formControlName="gtc" class="cursor-pointer" type="checkbox" />
         <p>
           I agree to the <span class="font-semibold text-main">Terms</span> &
           <span class="font-semibold text-main">Conditions</span>.
         </p>
       </div>
+      <div *ngIf="gtc?.invalid && (gtc?.dirty || gtc?.touched)">
+        <p *ngIf="gtc?.errors?.['required']" class="text-xs text-main">Accepting Terms & Conditions is required!</p>
+      </div>
 
       <div class="login__button flex items-center justify-center">
-        <button class="rounded-md bg-main text-white font-bold py-2 px-16">
+        <button type="submit" [disabled]="signupForm.invalid" class="rounded-md bg-main text-white font-bold py-2 px-16 disabled:opacity-50 disabled:cursor-not-allowed">
           Sign Up
         </button>
       </div>
@@ -167,6 +167,6 @@
           >
         </p>
       </div>
-    </div>
+    </form>
   </div>
 </section>

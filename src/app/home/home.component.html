@@ -102,7 +102,8 @@
        -->
     <div
       class="settings cursor-pointer rounded-md space-x-2 font-normal text-white flex items-center content-center absolute bottom-10 left-8"
-    >
+      (click)="logout()"
+      >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -124,7 +125,7 @@
       class="border-b border-gray flex items-center justify-between px-4 md:px-10 py-4 md:py-2"
     >
       <div class="info flex flex-col space-y-2">
-        <h1 class="text-2xl text-white font-bold">McDonalds</h1>
+        <h1 class="text-2xl text-white font-bold">{{userService.userData?.storeName}}</h1>
         <p class="text-xs text-[#8b8b8b]">{{today}}</p>
       </div>
       <div class="flex items-center justify-center space-x-5">
@@ -214,73 +215,6 @@
         
       </div>
       <router-outlet name="home"></router-outlet>
-    </div>
-  </div>
-
-
-
-  <div [ngClass]="{'opacity-100': alertsService.showError}" class="opacity-0 fixed right-10 top-5 z-40 flex w-96 shadow-lg rounded-lg transition-opacity duration-200 linear">
-    <div class="bg-[#C62828] border border-[#C62828] text-white px-4 rounded-l-lg flex items-center">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      
-      
-    </div>
-    <div class="px-4 py-4 text-white bg-secondary rounded-r-lg flex justify-between items-center w-full border border-l-transparent border-[#99999965]">
-      
-      <div class="flex flex-col space-y-1">
-        <p class="text-sm font-semibold">{{alertsService.message?.title}}</p>
-        <p class="text-xs">{{alertsService.message?.text}}</p>
-      </div>
-
-<!-- 
-      <button (click)="alertsService.toggleErrorAlert()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>              
-      </button> -->
-    </div>
-  </div>
-  <div [ngClass]="{'opacity-100': alertsService.showWarning}" class="opacity-0 fixed right-10 top-5 z-40 flex w-96 shadow-lg rounded-lg transition-opacity duration-200 linear">
-    <div class="bg-[#F9A825] border border-[#F9A825] text-white px-4 rounded-l-lg flex items-center">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-      </svg>
-      
-    </div>
-    <div class="px-4 py-4 text-white bg-secondary rounded-r-lg flex justify-between items-center w-full border border-l-transparent border-[#99999965]">
-      <div class="flex flex-col space-y-1">
-        <p class="text-sm font-semibold">{{alertsService.message?.title}}</p>
-        <p class="text-xs">{{alertsService.message?.text}}</p>
-      </div>
-
-      <!-- <button (click)="alertsService.toggleWarningAlert()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>              
-      </button> -->
-    </div>
-  </div>
-
-  <div [ngClass]="{'opacity-100': alertsService.showSuccess}" class="opacity-0 fixed right-10 top-5 z-40 flex w-96 shadow-lg rounded-lg transition-opacity duration-200 linear">
-    <div class="bg-[#43A047] border border-[#43A047] text-white px-4 rounded-l-lg flex items-center">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      
-    </div>
-    <div class="px-4 py-4 text-white bg-secondary rounded-r-lg flex justify-between items-center w-full border border-l-transparent border-[#99999965]">
-      <div class="flex flex-col space-y-1">
-        <p class="text-sm font-semibold">{{alertsService.message?.title}}</p>
-        <p class="text-xs">{{alertsService.message?.text}}</p>
-      </div>
-
-      <!-- <button (click)="alertsService.toggleSuccessAlert()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>              
-      </button> -->
     </div>
   </div>
 

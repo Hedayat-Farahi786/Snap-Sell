@@ -2,7 +2,8 @@ import { AlertsService } from './../api/alerts.service';
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../api/products.service';
 import { CategoriesService } from '../api/categories.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { UserService } from '../api/user.service';
 
 @Component({
   selector: 'app-settings',
@@ -42,12 +43,13 @@ export class SettingsComponent implements OnInit {
   storeForm!: FormGroup;
   securityForm!: FormGroup;
 
-  hrImagePreview = '../../assets/logos/logo_horizontal.png';
-  vtImagePreview = '../../assets/logos/logo_vertical.png';
-  logoImagePreview = '../../assets/logos/logo_icon.png';
+  logoPreview = '../../assets/logos/logo_vertical.png';
 
-  openTab = -1;
-  openSetting = 3;
+  openTab = 0;
+  openSetting = 4;
+
+  userData: any = {};
+
 
   categories: any = [];
   products: any = [];
@@ -61,12 +63,16 @@ export class SettingsComponent implements OnInit {
   constructor(
     public productService: ProductsService,
     public categoriesService: CategoriesService,
-    public alertsService: AlertsService
+    public alertsService: AlertsService,
+    private userService: UserService
   ) {
+
     this.categoriesIcons = this.categoriesService.categoriesIcons;
 
     this.getAllCategories();
     this.getAllProducts();
+
+
 
     let res: any = this.productService.products;
 
@@ -78,19 +84,6 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  deleteCategory(category: any) {
-    console.log(category);
-    this.categoriesService
-      .deleteCategoryById(category._id)
-      .subscribe((res: any) => {
-        this.alertsService.displaySuccessAlert(
-          'Success',
-          'Category Deleted Successfuly!'
-        );
-      });
-    this.getAllCategories();
-  }
-
   ngOnInit(): void {
 
     this.addCategoryForm = new FormGroup({
@@ -99,21 +92,106 @@ export class SettingsComponent implements OnInit {
       description: new FormControl(''),
     });
 
+    this.userService.getUserData().subscribe(
+      (res: any) => {
+        this.storeForm.get('storeName')?.setValue(res.storeName);
+        this.storeForm.get('currency')?.setValue(res.currency);
+        this.storeForm.get('mainColor')?.setValue(res.mainColor);
+        this.userService.refreshUserData();
+        this.alertsService.displaySuccessAlert("Success", "Store data updated successfully!");
+      },
+      (err: any) => {
+        this.alertsService.displayErrorAlert("Error", err.error.message);
+      }
+    );
+
     this.storeForm = new FormGroup({
-      name: new FormControl('McDonalds'),
-      currency: new FormControl('usd'),
-      color: new FormControl('#E06F2B'),
-      hrImage: new FormControl(null),
-      vtImage: new FormControl(null),
-      logoImage: new FormControl(null),
+      storeName: new FormControl(''),
+      currency: new FormControl(''),
+      mainColor: new FormControl(''),
+      logo: new FormControl(null),
     });
+
+    
 
     this.securityForm = new FormGroup({
       currentPassword: new FormControl('', [Validators.required]),
-      newPassword: new FormControl('', [Validators.required]),
+      newPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
       confirmNewPassword: new FormControl('', [Validators.required]),
+    }, {
+      validators: this.passwordMatchingValidatior
     });
   }
+
+  passwordMatchingValidatior: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('newPassword')?.value;
+    const confirmPassword = control.get('confirmNewPassword')?.value;
+
+    if (!password || !confirmPassword) { // if the password or confirmation has not been inserted ignore
+      return null;
+    }
+    
+    if (confirmPassword.length > 0 && confirmPassword !== password) {
+      this.securityForm.controls['confirmNewPassword'].setErrors({ missMatch: true }); // set the error in the confirmation input/control
+    }
+  
+    return null;
+  };
+
+
+  addNewProduct() {
+    this.productService.addNewProduct().subscribe(
+      (res: any) => {
+        this.alertsService.displaySuccessAlert("Success", `Product added successfully!`);
+        this.productService.toggleShowAddProduct();
+        this.productService.addProductForm.reset();
+        this.getAllProducts();
+      },
+      (err: any) => {
+        this.alertsService.displayErrorAlert("Error", err.message);
+      }
+    );
+  }
+
+  deleteProduct(product: any) {
+    this.productService.deleteProduct(product._id).subscribe(
+      (res: any) => {
+        this.alertsService.displaySuccessAlert("Success", `${product.name} deleted successfully!`);
+        this.getAllProducts();
+      }, (err: any) => {
+        this.alertsService.displayErrorAlert("Error", err.message);
+      }
+    );
+  }
+
+  editProduct() {
+    this.productService.editProduct().subscribe(
+      (res: any) => {
+        this.alertsService.displaySuccessAlert("Success", `Product updated successfully!`);
+        this.productService.toggleShowEditProduct();
+        this.productService.editProductForm.reset();
+        this.getAllProducts();
+      }, (err: any) => {
+        this.alertsService.displayErrorAlert("Error", err.message);
+      }
+    );
+  }
+
+
+
+  deleteCategory(category: any) {
+    this.categoriesService
+      .deleteCategoryById(category._id)
+      .subscribe((res: any) => {
+        this.alertsService.displaySuccessAlert(
+          'Success',
+          'Category Deleted Successfuly!'
+        );
+        this.getAllCategories();
+      });
+
+  }
+
 
   getAllCategories() {
     this.categoriesService.getAllCategories().subscribe((res: any) => {
@@ -124,6 +202,7 @@ export class SettingsComponent implements OnInit {
   getAllProducts() {
     this.productService.getAllproducts().subscribe((res: any) => {
       this.products = res;
+      this.toggleTabs(this.openTab);
     });
   }
 
@@ -139,55 +218,59 @@ export class SettingsComponent implements OnInit {
   }
 
   updatePassword() {
-    console.log(this.securityForm.value);
+    this.userService.updatePassword(this.securityForm.value);
   }
 
-  onHrImageSelected(event: any) {
+
+  onLogoSelected(event: any) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
 
       reader.readAsDataURL(event.target.files[0]);
       reader.onloadend = (e: any) => {
-        this.hrImagePreview = e.target['result'];
-      };
-    }
-  }
-
-  onVtImageSelected(event: any) {
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onloadend = (e: any) => {
-        this.vtImagePreview = e.target['result'];
-      };
-    }
-  }
-
-  onLogoImageSelected(event: any) {
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onloadend = (e: any) => {
-        this.logoImagePreview = e.target['result'];
+        this.logoPreview = e.target['result'];
       };
     }
   }
 
   submitStoreData() {
-    console.log(this.storeForm.value);
+    this.userService.updateUser(this.storeForm.value).subscribe(
+      (res: any) => {
+        this.userService.getUserData();
+        this.userData = this.userService.userData;
+        this.alertsService.displaySuccessAlert("Success", "Store data updated successfully!");
+      },
+      (err: any) => {
+        this.alertsService.displayErrorAlert("Error", err.error.message);
+      }
+    )
   }
 
   addNewCategory() {
     let data = this.addCategoryForm.value;
-    this.categoriesService.addNewCategory(data);
-    this.getAllCategories();
+    this.categoriesService.addNewCategory(data).subscribe(
+      (res: any) => {
+        this.alertsService.displaySuccessAlert("Success", `Category ${data.name} created sucessfully`);
+        this.getAllCategories();
+        this.categoriesService.toggleShowAddCategory();
+      }, (err: any) => {
+        this.alertsService.displayErrorAlert("Error", err.message);
+      }
+    );;
     this.addCategoryForm.reset();
   }
 
   editCategory() {
-    this.categoriesService.editCategory();
+    this.categoriesService.editCategory().subscribe(
+      (res: any) => {
+        this.alertsService.displaySuccessAlert("Success", `Category updated sucessfully`);
+        this.categoriesService.toggleEditCategory();
+        this.categoriesService.editCategoryForm.reset();
+        this.getAllCategories();
+      }, (err: any) => {
+        this.alertsService.displayErrorAlert("Error", err.message);
+      }
+    );;
   }
 
   selectCategoryIcon(id: number) {

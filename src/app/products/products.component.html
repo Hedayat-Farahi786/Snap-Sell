@@ -1,27 +1,39 @@
 
-<section class="products flex flex-col p-10 bg-[#2A2A2A]">
+<section class="products flex flex-col p-10 bg-[#2A2A2A] relative">
+  <div *ngIf="loading" class="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
+    <div class="border-t-transparent border-solid animate-spin  rounded-full border-main border-8 h-64 w-64"></div>
+</div>
+ <div *ngIf="!loading">
   <div class="menu__items flex space-x-5">
+    <div
+    [style]="{background: selectedMenu === 'All' ? '#e0702b4c' : '', borderColor: selectedMenu === 'All' ? '#E06F2B' : 'gray'}" (click)="selectMenu('All')"
+    class="menu__item w-28 cursor-pointer flex flex-col items-center content-center text-white border-2 px-3 py-5 space-y-2 rounded-lg"
+    >
+      <img
+        class="w-10"
+        src="../../assets/icons/products/icons8-list-view-100.png"
+      />
+      <p class="text-sm">All</p>
+    </div>
     <div
     [style]="{background: selectedMenu === menu.name ? '#e0702b4c' : '', borderColor: selectedMenu === menu.name ? '#E06F2B' : 'gray'}" (click)="selectMenu(menu.name)"
      *ngFor="let menu of categories"  class="menu__item w-28 cursor-pointer flex flex-col items-center content-center text-white border-2 px-3 py-5 space-y-2 rounded-lg"
     >
       <img
         class="w-10"
-        [src]="menu.icon"
+        [src]="menu.icon || '../../assets/icons/products/icons8-image-100.png'"
       />
       <p class="text-sm">{{menu.name}}</p>
     </div>
   </div>
 
   
-
-  
   <div class="mt-5 mb-7 flex items-center justify-between">
     <h1 class="text-white text-2xl font-bold">{{selectedMenu}} Menu</h1>
-    <!-- <p *ngIf="selectedMenu !== 'All'" class="text-gray text-sm">{{products[selectedMenu].length}} {{selectedMenu}} result</p> -->
+    <p *ngIf="selectedMenu !== 'All'" class="text-gray text-sm">{{displayProducts.length}} {{selectedMenu}} result</p>
   </div>
 
-    <div class="flex items-center justify-center w-full" *ngIf="displayProducts.length === 0">
+    <div class="flex items-center justify-center w-full" *ngIf="selectedMenu !== 'All' && displayProducts.length === 0">
       <div class="flex flex-col space-y-5 items-center justify-center pt-20">
         <img src="../../assets/productNoResult.png" alt="No results found">
         <p class="text-2xl text-gray font-semibold">{{selectedMenu}} Products Not Found.</p>
@@ -45,7 +57,7 @@
             <div class="flex space-x-5">
               <img
                 class="rounded-lg object-cover w-6/12 h-28"
-                [src]="product.image"
+                [src]="product.image || '../../assets/icons/products/icons8-image-100.png'"
                 alt=""
               />
               <div class="flex space-y-2 flex-col">
@@ -80,7 +92,7 @@
         <div class="flex space-x-5">
           <img
             class="rounded-lg object-cover w-6/12 h-28"
-            [src]="product.image"
+            [src]="product.image || '../../assets/icons/products/icons8-image-100.png'"
             alt=""
           />
           <div class="flex space-y-2 flex-col">
@@ -108,4 +120,5 @@
     </div>
   </div>
   <app-bill *ngIf="productsService.showBill"></app-bill>
+ </div>
 </section>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlertsService } from './api/alerts.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'snapsell';
+
+
+  constructor(public alertsService: AlertsService){}
+
+
 }

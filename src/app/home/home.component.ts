@@ -1,3 +1,4 @@
+import { UserService } from './../api/user.service';
 import { AlertsService } from './../api/alerts.service';
 import { CategoriesService } from './../api/categories.service';
 import { ProductsService } from './../api/products.service';
@@ -14,25 +15,30 @@ export class HomeComponent implements OnInit {
 
   showLanguages: boolean = false;
 
-
   menuOpened: boolean = false;
 
   cameDown: boolean = false;
 
   version = appVersion;
-  
+
 
   datePipe = new DatePipe('en-US');
 
   
   today: any = this.datePipe.transform(new Date(), 'EEEE, d MMMM yyyy');;
   
-  constructor(public productsService: ProductsService, public categoriesService: CategoriesService, public alertsService: AlertsService) {}
+  constructor(public productsService: ProductsService, public categoriesService: CategoriesService, public alertsService: AlertsService, public userService: UserService) {
+    this.userService.refreshUserData();
+  }
   
   ngOnInit(): void {
     window.addEventListener('scroll', ()=> {
       this.cameDown = window.scrollY > 200;
     })
+  }
+
+  logout(){
+    this.userService.logout();
   }
 
 

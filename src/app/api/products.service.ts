@@ -30,7 +30,6 @@ export class ProductsService {
   categories: any = [];
 
 
-
   productToEditId: any;
   settingProducts: any = [];
 
@@ -77,16 +76,7 @@ export class ProductsService {
       price: this.addProductForm.get('price')?.value,
       category: this.addProductForm.get('category')?.value,
     }
-   this.http.post(environment.backendUrl + "products", data).subscribe(
-    (res: any) => {
-      this.alertService.displaySuccessAlert("Success", `${data.name} added successfully!`);
-      this.toggleShowAddProduct();
-      this.addProductForm.reset();
-    },
-    (err: any) => {
-      this.alertService.displayErrorAlert("Error", err.message);
-    }
-   )
+   return this.http.post(environment.backendUrl + "products", data);
   }
 
   onAddProductImageSelect(event: any){
@@ -95,30 +85,15 @@ export class ProductsService {
     console.log(this.addProductForm.get('image')?.value);
   }
 
-  deleteProduct(product: any){
-    this.http.delete(environment.backendUrl + "products/" + product._id).subscribe(
-      (res: any) => {
-        this.alertService.displaySuccessAlert("Success", `${product.name} updated successfully!`);
-      }, (err: any) => {
-        this.alertService.displayErrorAlert("Error", err.message);
-      }
-    )
+  deleteProduct(id: any){
+    return this.http.delete(environment.backendUrl + "products/" + id);
   }
 
 
   editProduct(){
     let data = this.editProductForm.value;
   
-    this.http.patch(environment.backendUrl + "products/" + this.productToEditId, data).subscribe(
-      (res: any) => {
-        this.alertService.displaySuccessAlert("Success", `${data.name} updated successfully!`);
-        this.toggleShowEditProduct();
-        this.editProductForm.reset();
-      }, (err: any) => {
-        this.alertService.displayErrorAlert("Error", err.message);
-      }
-    )
-
+    return this.http.patch(environment.backendUrl + "products/" + this.productToEditId, data);
   }
 
   openEditProduct(product: any){

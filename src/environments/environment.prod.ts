@@ -1,4 +1,4 @@
 export const environment = {
-  backendUrl: "http://localhost:3000/",
+  backendUrl: "https://snapsell-backend.vercel.app/",
   production: true
 };
