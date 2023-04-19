@@ -1,4 +1,5 @@
 .product {
-    flex: 0 0 calc(33.33% - 2rem);
+    /* flex: 0 0 calc(25% - 2rem); */
+    width: 350px;
     /* The above value will create 3 cards in a row with some margin */
   }

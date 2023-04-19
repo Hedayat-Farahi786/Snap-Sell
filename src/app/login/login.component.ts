@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   showLanguages: boolean = false;
   loginForm!: FormGroup;
 
+  loading: boolean = false;
+
   constructor(private userService: UserService, private alertService: AlertsService, private router: Router) { }
 
   ngOnInit(): void {
@@ -25,11 +27,11 @@ export class LoginComponent implements OnInit {
 
   emailValidator(control: FormControl) {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
-    
+
     if (!emailPattern.test(control.value)) {
       return { email: true };
     }
-    
+
     return null;
   }
 
@@ -44,22 +46,26 @@ export class LoginComponent implements OnInit {
 
 
   login() {
+    this.loading = true;
     this.userService.userLogin(this.loginForm.value).subscribe(
       (res: any) => {
         let token = res.token;
         localStorage.setItem('token', token);
+        this.loading = false;
         this.router.navigateByUrl("/home");
       },
       (err: any) => {
-        if(err.error.message === "User not found"){
-          this.loginForm.controls['email'].setErrors({notFound:true})
-        } else if(err.error.message === "Password is incorrect"){
-          this.loginForm.controls['password'].setErrors({incorrect:true})
+        if (err.error.message === "User not found") {
+          this.loginForm.controls['email'].setErrors({ notFound: true })
+        } else if (err.error.message === "Password is incorrect") {
+          this.loginForm.controls['password'].setErrors({ incorrect: true })
         } else {
           this.alertService.displayErrorAlert("Error", err.error.message);
         }
+        this.loading = false;
       }
     )
+
   }
 
 

@@ -1,9 +1,9 @@
-<section class="login bg-secondary w-full h-screen flex flex-col items-center">
+<section class="login bg-secondary dark:bg-darkSecondary w-full h-screen flex flex-col items-center">
   <div class="logo w-full flex items-center justify-center mb-5 md:mb-0 py-8 relative">
     <img class="w-36" src="../../assets/logos/logo_vertical.png" alt="logo" />
-    <div class="absolute text-white right-10 top-5">
+    <div class="absolute text-magenta dark:text-darkMagenta right-10 top-5">
       <div>
-        <button (click)="selectLanguage()" class="hover:bg-light text-xs px-8 py-2 rounded-md inline-flex items-center">
+        <button (click)="selectLanguage()" class="hover:bg-light bg-light dark:bg-darkLight text-xs px-8 py-2 rounded-md inline-flex items-center">
           <svg aria-hidden="true" class="h-4 w-4 rounded-full mr-2" xmlns="http://www.w3.org/2000/svg"
             id="flag-icon-css-us" viewBox="0 0 512 512">
             <g fill-rule="evenodd">
@@ -26,7 +26,7 @@
         <div [style]="{ display: showLanguages ? 'block' : 'none' }"
           class="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md mt-2 transition duration-500 ease-in-out">
           <ul class="py-2 space-y-2 font-medium text-xs" role="none">
-            <li (click)="selectLanguage()" class="w-full hover:bg-light cursor-pointer px-4 py-2">
+            <li (click)="selectLanguage()" class="w-full hover:bg-light dark:bg-darkLight cursor-pointer px-4 py-2">
               <div class="inline-flex items-center">
                 <svg class="h-4 w-4 rounded-full mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                   id="flag-icon-css-de" viewBox="0 0 512 512">
@@ -42,15 +42,15 @@
       </div>
     </div>
   </div>
-  <div class="main text-white w-full flex items-center justify-center">
+  <div class="main text-magenta dark:text-darkMagenta w-full flex items-center justify-center">
     <form [formGroup]="loginForm" (submit)="login()"
-      class="login__card bg-light w-11/12 md:w-2/6 space-y-8 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md p-10">
+      class="login__card bg-light dark:bg-darkLight w-11/12 md:w-2/6 space-y-8 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md p-10">
       <h1 class="font-bold text-xl text-center">Login to your account</h1>
       <div class="flex flex-col space-y-4">
         <div class="inputs flex flex-col space-y-4">
           <div class="email__input flex flex-col w-full space-y-2">
             <label class="text-sm font-normal" for="email">Email</label>
-            <input class="w-full text-secondary rounded-md border-gray border outline-none bg-[#e0e0e0] px-4 py-2"
+            <input class="w-full drop-shadow-md rounded-md text-magenta dark:text-darkMagenta bg-secondary dark:bg-darkSecondary px-4 py-4 outline-none text-sm"
               type="email" formControlName="email" placeholder="john@example.com" />
             <div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
               <p *ngIf="email?.errors?.['email']" class="text-xs text-main">Incorrect email format!</p>
@@ -61,7 +61,7 @@
           </div>
           <div class="password__input flex flex-col w-full space-y-2">
             <label class="text-sm font-normal" for="password">Password</label>
-            <input class="w-full text-secondary rounded-md border-gray border outline-none bg-[#e0e0e0] px-4 py-2"
+            <input class="w-full drop-shadow-md rounded-md text-magenta dark:text-darkMagenta bg-secondary dark:bg-darkSecondary px-4 py-4 outline-none text-sm"
               type="password" formControlName="password" placeholder="******" />
             <div *ngIf="password?.invalid && (password?.dirty || password?.touched)">
               <p *ngIf="password?.errors?.['required']" class="text-xs text-main">Password is required!</p>
@@ -82,8 +82,13 @@
         </div>
       </div>
       <div class="login__button">
-        <button type="submit" [disabled]="loginForm.invalid" class="w-full rounded-md bg-main text-white font-bold p-2 disabled:opacity-50 disabled:cursor-not-allowed">
-          Login
+        <button type="submit" [disabled]="loginForm.invalid || loading" class="w-full rounded-md bg-main text-magenta dark:text-darkMagenta font-bold p-2 disabled:opacity-50 disabled:cursor-not-allowed">
+         <div class="flex items-center justify-center space-x-2">
+          <span>Login</span>
+          <svg *ngIf="loading" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="animate-spin w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+          </svg>   
+         </div>       
         </button>
       </div>
       <div class="login__reminder text-xs">

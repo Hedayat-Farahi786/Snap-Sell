@@ -63,11 +63,9 @@ export class ProductsComponent implements OnInit {
             items
           })
         });
+    this.loading = false;
       }
     )
-
-    this.loading = false;
-
   }
 
   selectMenu(menuName: string) {
@@ -81,7 +79,8 @@ export class ProductsComponent implements OnInit {
   }
 
   addToBill(product: any) {
-    this.productsService.addToBillProducts(product);
+    product.note = "";
+    this.productsService.addToBillProduct(product);
   }
 
 

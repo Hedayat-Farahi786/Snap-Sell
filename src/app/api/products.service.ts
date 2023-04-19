@@ -62,6 +62,15 @@ export class ProductsService {
   }
 
 
+  calculateTotalPrice() {
+    let totalPrice = 0;
+    for (let i = 0; i < this.billProducts.length; i++) {
+      totalPrice += this.billProducts[i].price * this.billProducts[i].quantity;
+    }
+    return totalPrice.toFixed(2);
+  }
+
+
 
   getAllproducts(){
     return this.http.get(environment.backendUrl + "products");
@@ -118,12 +127,55 @@ export class ProductsService {
   }
 
 
-  addToBillProducts(product: any) {
-    this.billProducts.push(product);
+  addToBillProduct(product: any) {
+    let productFound = false;
+    for (let i = 0; i < this.billProducts.length; i++) {
+      if (this.billProducts[i]._id === product._id) {
+        this.billProducts[i].quantity++;
+        productFound = true;
+        break;
+      }
+    }
+    if (!productFound) {
+      product.quantity = 1;
+      this.billProducts.push(product);
+    }
+  }
+  
+  removeProductFromBill(productId: string) {
+    let indexToRemove = -1;
+    for (let i = 0; i < this.billProducts.length; i++) {
+      if (this.billProducts[i]._id === productId) {
+        if (this.billProducts[i].quantity > 1) {
+          this.billProducts[i].quantity--;
+        } else {
+          indexToRemove = i;
+        }
+        break;
+      }
+    }
+    if (indexToRemove >= 0) {
+      this.billProducts.splice(indexToRemove, 1);
+    }
+  }
+
+
+  totalBillProductsLength() {
+    let total = 0;
+    this.billProducts.forEach((product: any) => {
+      total += product.quantity;
+    });
+    return total;
   }
 
   toggleShowBill() {
     this.showBill = !this.showBill;
+  }
+
+
+  resetBill(){
+    this.billProducts = [];
+    this.toggleShowBill();
   }
 
 

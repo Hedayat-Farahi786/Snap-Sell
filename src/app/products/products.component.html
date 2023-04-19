@@ -1,13 +1,14 @@
 
-<section class="products flex flex-col p-10 bg-[#2A2A2A] relative">
-  <div *ngIf="loading" class="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
-    <div class="border-t-transparent border-solid animate-spin  rounded-full border-main border-8 h-64 w-64"></div>
+<section class="products flex flex-col p-10 bg-secondary dark:bg-darkSecondary" [ngClass]="{'h-full': loading}">
+  <div *ngIf="loading" class="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 flex flex-col items-center space-y-3 text-main">
+    <div class="border-t-transparent border-solid animate-spin  rounded-full border-main border-8 h-32 w-32"></div>
+    <p class="font-semibold">Loading...</p>
 </div>
  <div *ngIf="!loading">
   <div class="menu__items flex space-x-5">
     <div
     [style]="{background: selectedMenu === 'All' ? '#e0702b4c' : '', borderColor: selectedMenu === 'All' ? '#E06F2B' : 'gray'}" (click)="selectMenu('All')"
-    class="menu__item w-28 cursor-pointer flex flex-col items-center content-center text-white border-2 px-3 py-5 space-y-2 rounded-lg"
+    class="menu__item drop-shadow-md  w-28 cursor-pointer flex flex-col items-center content-center text-magenta dark:text-darkMagenta border border-gray px-3 py-5 space-y-2 rounded-lg"
     >
       <img
         class="w-10"
@@ -17,7 +18,7 @@
     </div>
     <div
     [style]="{background: selectedMenu === menu.name ? '#e0702b4c' : '', borderColor: selectedMenu === menu.name ? '#E06F2B' : 'gray'}" (click)="selectMenu(menu.name)"
-     *ngFor="let menu of categories"  class="menu__item w-28 cursor-pointer flex flex-col items-center content-center text-white border-2 px-3 py-5 space-y-2 rounded-lg"
+     *ngFor="let menu of categories"  class="menu__item drop-shadow-md  w-28 cursor-pointer flex flex-col items-center content-center text-magenta dark:text-darkMagenta border border-gray px-3 py-5 space-y-2 rounded-lg"
     >
       <img
         class="w-10"
@@ -29,7 +30,7 @@
 
   
   <div class="mt-5 mb-7 flex items-center justify-between">
-    <h1 class="text-white text-2xl font-bold">{{selectedMenu}} Menu</h1>
+    <h1 class="text-magenta dark:text-darkMagenta text-2xl font-bold">{{selectedMenu}} Menu</h1>
     <p *ngIf="selectedMenu !== 'All'" class="text-gray text-sm">{{displayProducts.length}} {{selectedMenu}} result</p>
   </div>
 
@@ -40,12 +41,12 @@
       </div>
     </div>
 
-  <div class="products flex items-start flex-wrap w-full">
+  <div class="products">
 
     <div *ngIf="selectedMenu === 'All'">
       <div *ngFor="let allProd of allProducts" class="flex flex-col">
        <div class="w-full flex items-center justify-between">
-        <h1 class="text-white font-semibold">{{allProd.menuName}}</h1>
+        <h1 class="text-magenta dark:text-darkMagenta font-semibold">{{allProd.menuName}}</h1>
         <p class="text-gray text-xs">{{allProd.items.length}} Products</p>
        </div>
         <div class="w-full h-[1px] bg-[#6E6E6E]"></div>
@@ -53,7 +54,7 @@
           <div class="w-full flex items-center justify-center h-10 pt-5">
             <h1 *ngIf="allProd.items.length == 0" class="text-gray">No Products</h1>
           </div>
-          <div *ngFor="let product of allProd.items" class="product space-y-7 mb-7 mr-5 rounded-xl p-5 w-96 text-white bg-[#353535]">
+          <div *ngFor="let product of allProd.items" class="product drop-shadow-md space-y-7 mb-7 mr-5 rounded-xl p-5 w-96 text-magenta dark:text-darkMagenta bg-light dark:bg-darkLight">
             <div class="flex space-x-5">
               <img
                 class="rounded-lg object-cover w-6/12 h-28"
@@ -72,7 +73,7 @@
                 <p class="font-semibold text-sm">{{option.name}}</p>
                 <div class="flex space-x-3">
                   <div
-                    *ngFor="let value of option.values" class="cursor-pointer bg-[#504E4F] text-white border-main border-2 rounded-full p-2 w-10 h-10 text-xs flex items-center justify-center"
+                    *ngFor="let value of option.values" class="cursor-pointer bg-[#504E4F] text-magenta dark:text-darkMagenta border-main border-2 rounded-full p-2 w-10 h-10 text-xs flex items-center justify-center"
                   >
                     {{value}}%
                   </div>
@@ -80,7 +81,7 @@
               </div>
             </div>
       
-            <button (click)="addToBill(product)" class="w-full bg-main text-white rounded-full py-2">Add to Bill</button>
+            <button (click)="addToBill(product)" class="w-full bg-main text-white dark:text-darkMagenta rounded-full py-2">Add to Bill</button>
           </div>
         </div>
       </div>
@@ -88,7 +89,7 @@
     
     <!-- <div *ngIf="selectedMenu !== 'All' && products[selectedMenu]?.length !== 0" class="flex items-start flex-wrap w-full"> -->
     <div *ngIf="selectedMenu !== 'All'" class="flex items-start flex-wrap w-full">
-      <div *ngFor="let product of displayProducts" class="product space-y-7 mb-7 mr-5 rounded-xl p-5 w-96 text-white bg-[#353535]">
+      <div *ngFor="let product of displayProducts" class="product space-y-7 mb-7 mr-5 rounded-xl p-5 w-96 text-magenta dark:text-darkMagenta bg-[#353535]">
         <div class="flex space-x-5">
           <img
             class="rounded-lg object-cover w-6/12 h-28"
@@ -107,7 +108,7 @@
             <p class="font-semibold text-sm">{{option.name}}</p>
             <div class="flex space-x-3">
               <div
-                *ngFor="let value of option.values" class="cursor-pointer bg-[#504E4F] text-white border-main border-2 rounded-full p-2 w-10 h-10 text-xs flex items-center justify-center"
+                *ngFor="let value of option.values" class="cursor-pointer bg-[#504E4F] text-magenta dark:text-darkMagenta border-main border-2 rounded-full p-2 w-10 h-10 text-xs flex items-center justify-center"
               >
                 {{value}}%
               </div>
@@ -115,7 +116,7 @@
           </div>
         </div>
   
-        <button (click)="addToBill(product)" class="w-full bg-main text-white rounded-full py-2">Add to Bill</button>
+        <button (click)="addToBill(product)" class="w-full bg-main text-magenta dark:text-darkMagenta rounded-full py-2">Add to Bill</button>
       </div>
     </div>
   </div>

@@ -1,13 +1,17 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{html,ts}"],
+  darkMode: "class",
   theme: {
     extend: {},
     colors: {
       transparent: "transparent",
       main: "#E06F2B",
-      secondary: '#2a2a2a',
-      light: '#353535',
+      secondary: '#ffffff',
+      light: '#fafafa',
+      darkSecondary: '#2a2a2a',
+      darkLight: '#353535',
+      white: "#333333",
       white: "#fafafa",
       black: "#000000",
       gray: "#C1C5CD",
@@ -21,7 +25,8 @@ module.exports = {
       teal: "#008080",
       navy: "#000080",
       gold: "#ffd700",
-      magenta: "#ff00ff",
+      magenta: "#33333",
+      darkMagenta: "#fafafa",
       brown: "#a52a2a",
     },
   },

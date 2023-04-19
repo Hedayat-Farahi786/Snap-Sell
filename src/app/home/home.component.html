@@ -1,9 +1,9 @@
-<section class="home flex h-screen bg-secondary">
+<section class="home flex h-screen bg-secondary dark:bg-darkSecondary">
   <div [style]="{width: menuOpened ? '5vw' : '15vw'}" class="h-full"></div>
   <!-- <div [style]="{width: menuOpened ? '5vw' : '15vw'}" class="h-full fixed py-5 bg-main flex flex-col items-center "> -->
     <div [style]="{ width: menuOpened ? '5vw' : '15vw' }" class="h-full fixed py-5 bg-main flex flex-col items-center transition-all duration-500 linear">
 
-    <div (click)="toggleSidebar()" class="transition-all duration-200 ease-in-out absolute -right-5 cursor-pointer w-8 h-8 bg-white text-main flex items-center justify-center rounded-full">
+    <div (click)="toggleSidebar()" class="transition-all duration-200 ease-in-out absolute -right-5 drop-shadow-md cursor-pointer w-8 h-8 bg-white text-main flex items-center justify-center rounded-full">
       <svg *ngIf="menuOpened" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="transition-all duration-200 ease-in-out w-5 h-5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
       </svg>
@@ -96,7 +96,7 @@
       </div>
     </div>
 
-    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 absolute bottom-10 left-8 text-white">
+    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 absolute bottom-10 left-8 text-magenta dark:text-darkMagenta">
         <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm5.03 4.72a.75.75 0 010 1.06l-1.72 1.72h10.94a.75.75 0 010 1.5H10.81l1.72 1.72a.75.75 0 11-1.06 1.06l-3-3a.75.75 0 010-1.06l3-3a.75.75 0 011.06 0z" clip-rule="evenodd" />
       </svg>
        -->
@@ -125,14 +125,14 @@
       class="border-b border-gray flex items-center justify-between px-4 md:px-10 py-4 md:py-2"
     >
       <div class="info flex flex-col space-y-2">
-        <h1 class="text-2xl text-white font-bold">{{userService.userData?.storeName}}</h1>
+        <h1 class="text-2xl text-magenta dark:text-darkMagenta font-bold">{{userService.userData?.storeName}}</h1>
         <p class="text-xs text-[#8b8b8b]">{{today}}</p>
       </div>
       <div class="flex items-center justify-center space-x-5">
-        <span class="text-gray text-xs font-medium mr-2 px-2.5 py-0.5 rounded border border-gray text-white"><span class="text-gray mr-2">Version:</span> {{version}}</span>
-        <div (click)="openBill()" class="text-white relative cursor-pointer">
+        <span class="text-gray text-xs font-medium mr-2 px-2.5 py-0.5 rounded border border-gray"><span class="text-gray mr-2">Version:</span> {{version}}</span>
+        <div (click)="openBill()" class="text-magenta dark:text-darkMagenta relative cursor-pointer">
           <div *ngIf="productsService.billProducts.length !== 0" class="absolute -top-3 -left-3 flex w-5 h-5 items-center justify-center p-2 bg-main rounded-full">
-            <span class="text-xs font-bold">{{productsService.billProducts.length}}</span>
+            <span class="text-xs text-white font-bold">{{productsService.totalBillProductsLength()}}</span>
           </div>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -142,7 +142,7 @@
         <div class="relative">
           <button
             (click)="selectLanguage()"
-            class="hover:bg-light text-white text-xs px-2 md:px-8 py-2 rounded-md inline-flex items-center"
+            class="hover:bg-light dark:bg-darkLight bg-light shadow-sm text-magenta dark:text-darkMagenta text-xs px-2 md:px-8 py-2 rounded-md inline-flex items-center"
           >
             <svg
               aria-hidden="true"
@@ -180,12 +180,12 @@
           </button>
           <div
             [style]="{ display: showLanguages ? 'block' : 'none' }"
-            class="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-secondary absolute w-full rounded-md transition duration-500 ease-in-out"
+            class="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-secondary dark:bg-darkSecondary absolute w-full rounded-md transition duration-500 ease-in-out"
           >
-            <ul class="py-2 space-y-2 font-medium text-xs text-white" role="none">
+            <ul class="py-2 space-y-2 font-medium text-xs text-magenta dark:text-darkMagenta" role="none">
               <li
                 (click)="selectLanguage()"
-                class="w-full hover:bg-light cursor-pointer px-4 py-2"
+                class="w-full hover:bg-light dark:bg-darkLight cursor-pointer px-4 py-2"
               >
                 <div class="inline-flex items-center">
                   <svg
@@ -205,10 +205,19 @@
             </ul>
           </div>
         </div>
+        <button (click)="toggleDarkMode()" class="border border-gray rounded shadow-sm p-1 cursor-pointer text-magenta dark:text-darkMagenta hover:opacity-80 transition-all duration-200 ease-linear">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 flex dark:hidden">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 hidden dark:flex">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+        </svg>
+        
+        </button>
       </div>
     </div>
-    <div class="bg-secondary h-full">
-      <div *ngIf="cameDown" (click)="scrollToTop()" class="bg-white z-50 inline-block text-main p-1 rounded-full fixed transition-all bottom-8 right-8 cursor-pointer transition-all duration-200 ease-in-out">
+    <div class="bg-secondary dark:bg-darkSecondary h-full">
+      <div *ngIf="cameDown" (click)="scrollToTop()" class="bg-white z-50 inline-block text-main p-1 rounded-full fixed bottom-8 right-8 cursor-pointer transition-all duration-200 ease-in-out">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18" />
         </svg>

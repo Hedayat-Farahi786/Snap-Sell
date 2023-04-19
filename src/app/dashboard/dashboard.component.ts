@@ -1,6 +1,9 @@
+import { OrdersService } from './../api/orders.service';
 import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import Chart, { ArcElement, DoughnutController, Tooltip } from 'chart.js/auto';
+import { CustomersService } from '../api/customers.service';
+import { AlertsService } from '../api/alerts.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,6 +14,11 @@ export class DashboardComponent implements OnInit {
 
   datePipe = new DatePipe('en-US');
   today: any = this.datePipe.transform(new Date(), 'EEEE, d MMMM yyyy');
+
+
+  totalRevenue: number = 0;
+  orders: any = [];
+  customers: any = [];
 
 
   tableData = [
@@ -111,9 +119,41 @@ export class DashboardComponent implements OnInit {
   
 
 
-  constructor() { }
+  constructor(private orderService: OrdersService, private customerService: CustomersService, private alertService: AlertsService) { }
 
   ngOnInit(): void {
+
+    this.totalRevenue = 0;
+
+    
+    this.orderService.getAllOrders().subscribe(
+      (res: any) => {
+        this.orders = res;
+        res.forEach((order: any) => {
+          if(order.total){
+            this.totalRevenue += order.total;
+          }
+        });
+      },
+      (err: any) => {
+        this.alertService.displayErrorAlert("Error", err.error.message);
+      }
+    )
+
+
+
+    this.customerService.getAllCustomers().subscribe(
+      (res: any) => {
+        this.customers = res;
+      },
+      (err: any) => {
+        this.alertService.displayErrorAlert("Error", err.error.message);
+      }
+    )
+
+
+
+
     Chart.register(DoughnutController, Tooltip, ArcElement);
     const data = {
       // labels: ['Dine In', 'To Go', 'Delivery'],

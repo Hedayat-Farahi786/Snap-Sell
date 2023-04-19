@@ -46,7 +46,7 @@ export class SettingsComponent implements OnInit {
   logoPreview = '../../assets/logos/logo_vertical.png';
 
   openTab = 0;
-  openSetting = 4;
+  openSetting = 1;
 
   userData: any = {};
 
@@ -98,7 +98,7 @@ export class SettingsComponent implements OnInit {
         this.storeForm.get('currency')?.setValue(res.currency);
         this.storeForm.get('mainColor')?.setValue(res.mainColor);
         this.userService.refreshUserData();
-        this.alertsService.displaySuccessAlert("Success", "Store data updated successfully!");
+        // this.alertsService.displaySuccessAlert("Success", "Store data updated successfully!");
       },
       (err: any) => {
         this.alertsService.displayErrorAlert("Error", err.error.message);
@@ -148,7 +148,7 @@ export class SettingsComponent implements OnInit {
         this.getAllProducts();
       },
       (err: any) => {
-        this.alertsService.displayErrorAlert("Error", err.message);
+        this.alertsService.displayErrorAlert("Error", err.error.message);
       }
     );
   }
@@ -159,7 +159,7 @@ export class SettingsComponent implements OnInit {
         this.alertsService.displaySuccessAlert("Success", `${product.name} deleted successfully!`);
         this.getAllProducts();
       }, (err: any) => {
-        this.alertsService.displayErrorAlert("Error", err.message);
+        this.alertsService.displayErrorAlert("Error", err.error.message);
       }
     );
   }
@@ -172,7 +172,7 @@ export class SettingsComponent implements OnInit {
         this.productService.editProductForm.reset();
         this.getAllProducts();
       }, (err: any) => {
-        this.alertsService.displayErrorAlert("Error", err.message);
+        this.alertsService.displayErrorAlert("Error", err.error.message);
       }
     );
   }
@@ -254,7 +254,7 @@ export class SettingsComponent implements OnInit {
         this.getAllCategories();
         this.categoriesService.toggleShowAddCategory();
       }, (err: any) => {
-        this.alertsService.displayErrorAlert("Error", err.message);
+        this.alertsService.displayErrorAlert("Error", err.error.message);
       }
     );;
     this.addCategoryForm.reset();
@@ -268,7 +268,7 @@ export class SettingsComponent implements OnInit {
         this.categoriesService.editCategoryForm.reset();
         this.getAllCategories();
       }, (err: any) => {
-        this.alertsService.displayErrorAlert("Error", err.message);
+        this.alertsService.displayErrorAlert("Error", err.error.message);
       }
     );;
   }

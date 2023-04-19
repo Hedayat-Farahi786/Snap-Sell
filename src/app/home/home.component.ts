@@ -41,6 +41,10 @@ export class HomeComponent implements OnInit {
     this.userService.logout();
   }
 
+  toggleDarkMode(){
+    document.documentElement.classList.toggle("dark")
+  }
+
 
   selectLanguage(){
     this.showLanguages = !this.showLanguages;

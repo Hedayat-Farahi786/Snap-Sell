@@ -1,11 +1,11 @@
-<section class="signup bg-secondary w-full h-screen flex flex-col items-center">
+<section class="signup bg-secondary dark:bg-darkSecondary w-full h-screen flex flex-col items-center">
   <div class="logo w-full flex items-center justify-center mb-5 md:mb-0 py-8">
     <img class="w-32" src="../../assets/logos/logo_vertical.png" alt="logo" />
-    <div class="absolute right-10 top-5 text-white">
+    <div class="absolute right-10 top-5 text-magenta dark:text-darkMagenta">
       <div>
         <button
           (click)="selectLanguage()"
-          class="hover:bg-light text-xs px-8 py-2 rounded-md inline-flex items-center"
+          class="hover:bg-light dark:bg-darkLight text-xs px-8 py-2 rounded-md inline-flex items-center"
         >
           <svg
             aria-hidden="true"
@@ -48,7 +48,7 @@
           <ul class="py-2 space-y-2 font-medium text-xs" role="none">
             <li
               (click)="selectLanguage()"
-              class="w-full hover:bg-light cursor-pointer px-4 py-2"
+              class="w-full hover:bg-light dark:bg-darkLight cursor-pointer px-4 py-2"
             >
               <div class="inline-flex items-center">
                 <svg
@@ -70,9 +70,9 @@
       </div>
     </div>
   </div>
-  <div class="main w-full text-white flex items-center justify-center">
+  <div class="main w-full text-magenta dark:text-darkMagenta flex items-center justify-center">
     <form [formGroup]="signupForm" (submit)="signup()"
-      class="login__card bg-light w-11/12 md:w-2/6 space-y-6 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md px-10 py-5"
+      class="login__card bg-light dark:bg-darkLight w-11/12 md:w-2/6 space-y-6 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md px-10 py-5"
     >
       <h1 class="font-bold text-xl text-center mb-2">Sign up a new account</h1>
       <div
@@ -82,7 +82,7 @@
           <div class="email__input flex flex-col w-full space-y-2">
             <label class="text-sm font-normal" for="email">Email</label>
             <input
-              class="w-full bg-[#e0e0e0] text-secondary rounded-md border-gray text-sm border outline-none px-4 py-2"
+              class="w-full drop-shadow-md rounded-md text-magenta dark:text-darkMagenta bg-secondary dark:bg-darkSecondary px-4 py-4 outline-none text-sm"
               type="email"
               placeholder="john@example.com"
               formControlName="email"
@@ -98,7 +98,7 @@
               >Business Name</label
             >
             <input
-              class="w-full bg-[#e0e0e0] text-secondary rounded-md border-gray text-sm border outline-none px-4 py-2"
+              class="w-full drop-shadow-md rounded-md text-magenta dark:text-darkMagenta bg-secondary dark:bg-darkSecondary px-4 py-4 outline-none text-sm"
               type="email"
               placeholder="McDonalds"
               formControlName="storeName"
@@ -111,7 +111,7 @@
           <div class="password__input flex flex-col w-full space-y-2">
             <label class="text-sm font-normal" for="password">Password</label>
             <input
-              class="w-full bg-[#e0e0e0] text-secondary rounded-md border-gray text-sm border outline-none px-4 py-2"
+              class="w-full drop-shadow-md rounded-md text-magenta dark:text-darkMagenta bg-secondary dark:bg-darkSecondary px-4 py-4 outline-none text-sm"
               type="password"
               placeholder="******"
               formControlName="password"
@@ -127,7 +127,7 @@
               >Confirm Password</label
             >
             <input
-              class="w-full bg-[#e0e0e0] text-secondary rounded-md border-gray text-sm border outline-none px-4 py-2"
+              class="w-full drop-shadow-md rounded-md text-magenta dark:text-darkMagenta bg-secondary dark:bg-darkSecondary px-4 py-4 outline-none text-sm"
               type="password"
               placeholder="******"
               formControlName="confirmPassword"
@@ -153,7 +153,7 @@
       </div>
 
       <div class="login__button flex items-center justify-center">
-        <button type="submit" [disabled]="signupForm.invalid" class="rounded-md bg-main text-white font-bold py-2 px-16 disabled:opacity-50 disabled:cursor-not-allowed">
+        <button type="submit" [disabled]="signupForm.invalid" class="rounded-md bg-main text-magenta dark:text-darkMagenta font-bold py-2 px-16 disabled:opacity-50 disabled:cursor-not-allowed">
           Sign Up
         </button>
       </div>
